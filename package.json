@@ -1,0 +1,14 @@
+{
+  "name": "last-mile",
+  "version": "1.0.0",
+  "description": "Shuttle planning for Pune Metro's last mile: who can switch from cabs to Metro + a Ramwadi shuttle, how often it should run, and what it saves.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "test": "node --test tests/",
+    "summary": "node scripts/summary.mjs"
+  }
+}

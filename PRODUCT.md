@@ -38,7 +38,7 @@ The product name is Last Mile. Its voice is plain, specific, and finance-friendl
 
 ## Evidence on Hand
 
-- Product specification and acceptance criteria: `PLAN.md`.
+- Product specification and acceptance criteria: `docs/process/PLAN.md`.
 - Binding visual and copy constraints: `docs/design-brief.md`.
 - Demo narrative: `docs/demo-script.md`.
 - Reference stations, places, and model assumptions: `docs/reference/`.

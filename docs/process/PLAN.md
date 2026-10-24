@@ -92,13 +92,13 @@ Deterministic template, no AI call: 120–180 words addressed to "Finance", stat
 the 3 assumptions with lowest confidence, and the Line 3 note when the toggle is on. "Copy memo" button.
 
 ## 8. Milestones
-### On the train (12:00–1:15) — `/goal` from `prompts/01-train-goal.md`
+### On the train (12:00–1:15) — `/goal` from `docs/process/prompts/01-train-goal.md`
 - **M1 Data + model (≈25 min):** data files, generator, all of §5, tests green. No UI yet beyond a placeholder.
 - **M2 Map (≈30 min):** §6 map renders all three lines, stations, 1,200 dots coloured by default verdict, shuttle loop.
 - **M3 Controls + results (≈20 min):** sliders/toggles recompute dots and results panel live.
 
-### At the auditorium (3:00–4:30) — `prompts/02-auditorium-goal.md`, then `prompts/03-polish.md`
-- **M4 Memo + assumptions table + Line 3 what-if story** (≈30 min) — include `recommendHeadway` from docs/review-1.md SHOULD
+### At the auditorium (3:00–4:30) — `docs/process/prompts/02-auditorium-goal.md`, then `docs/process/prompts/03-polish.md`
+- **M4 Memo + assumptions table + Line 3 what-if story** (≈30 min) — include `recommendHeadway` from docs/process/reviews/review-1.md SHOULD
 - **M5 Design pass:** `/impeccable critique` → `/impeccable polish` → make-interfaces-feel-better review (≈30 min)
 - **M6 Ship (≈20 min):** README with screenshot, GitHub Pages deploy, `docs/demo-script.md` rehearsal. Submit by 4:25.
 

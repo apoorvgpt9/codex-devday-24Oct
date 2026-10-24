@@ -1,13 +1,13 @@
 # AGENTS.md — rules for Codex in this repo
 
-Read this file, then `PLAN.md`, then `PRODUCT.md` and `docs/design-brief.md` before writing code.
+Read this file, then `docs/process/PLAN.md`, then `PRODUCT.md` and `docs/design-brief.md` before writing code.
 `DESIGN.md` does not exist yet by design — `docs/design-brief.md` is the visual source of truth until M5,
 when `/impeccable document` generates `DESIGN.md` from the built UI. Do not create `DESIGN.md` before M5.
 
 ## What we are building
 **Last Mile** — a planning tool for a company's transport/admin team in Pune. It shows which employees
 can realistically commute by Pune Metro + a company shuttle from Ramwadi station to Kharadi IT parks,
-how often that shuttle should run, and what it saves (₹ cab spend, CO₂, minutes). Full spec: `PLAN.md`.
+how often that shuttle should run, and what it saves (₹ cab spend, CO₂, minutes). Full spec: `docs/process/PLAN.md`.
 
 ## Hard constraints (non-negotiable)
 1. **Zero dependencies, zero build step.** Plain `index.html` + ES modules in `src/` + CSS in `styles/`.
@@ -25,16 +25,16 @@ how often that shuttle should run, and what it saves (₹ cab spend, CO₂, minu
    Do not install or invent a second design system. Do not use any pattern listed under "Do not" in the brief.
 
 ## Working rhythm
-- Work milestone by milestone in the order in `PLAN.md`. Do not start a milestone before the previous
+- Work milestone by milestone in the order in `docs/process/PLAN.md`. Do not start a milestone before the previous
   one's acceptance checks pass.
 - **Commit and push after every milestone** with message `M<n>: <what now works>`.
   If `git push` fails (no signal), keep working and push at the next opportunity — never block on it.
-- Append one line per milestone to `PROGRESS.md`: time, milestone, what was verified, known gaps.
-- If something in `PLAN.md` is ambiguous, pick the simplest option that keeps the demo working,
-  note the choice in `PROGRESS.md`, and continue. Do not stop to ask.
-- Never edit `PLAN.md`, `AGENTS.md`, `docs/` or `prompts/` — those are owned by the human/orchestrator.
+- Append one line per milestone to `docs/process/PROGRESS.md`: time, milestone, what was verified, known gaps.
+- If something in `docs/process/PLAN.md` is ambiguous, pick the simplest option that keeps the demo working,
+  note the choice in `docs/process/PROGRESS.md`, and continue. Do not stop to ask.
+- Never edit `docs/process/PLAN.md`, `AGENTS.md`, `docs/` or `docs/process/prompts/` — those are owned by the human/orchestrator.
 
 ## Definition of done for any milestone
 - `node --test tests/` passes.
 - Page loads from `http://localhost:8000` with no console errors and with network disabled.
-- The milestone's acceptance checks in `PLAN.md` are met.
+- The milestone's acceptance checks in `docs/process/PLAN.md` are met.

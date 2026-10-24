@@ -1,6 +1,6 @@
 # Review 2 — M2 + M3 (commits 1b7d4a2, c233790)
 
-Rendered in headless Chromium by the orchestrator (screenshots in `docs/review-assets/`).
+Rendered in headless Chromium by the orchestrator (screenshots in `review-assets/`).
 
 ## Fixed by orchestrator
 - **Page crashed on load — nothing rendered.** `map.js`: `group.append(title).textContent = …` — `append()` returns
