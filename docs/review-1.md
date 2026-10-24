@@ -6,7 +6,7 @@ Verified independently: 7/7 tests pass; switchers 200 / 271 / 284 / 461 reproduc
 Net monthly saving today: PMPML-only ₹26.5 L > 15-min shuttle ₹23.6 L > 10-min shuttle ₹19.5 L.
 The model currently says "don't run a shuttle" — because of three bugs, not because it's true.
 
-## MUST (fix before M2)
+## MUST (fix before M2) — ✅ resolved in 6f1e7f6, verified by orchestrator
 1. **Fares are one-way, cab cost is round-trip.** `metroFare` and `accessCost` must be ×2 per day in
    `reimbursedFares` (to office and back), matching `cab.costPerDay`.
 2. **PMPML has unlimited capacity.** A bus every 30 min cannot carry 200 extra people per day.
