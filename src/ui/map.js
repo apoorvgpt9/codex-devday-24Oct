@@ -115,7 +115,9 @@ export function createMap(container, { stations, places, results, toleranceMin, 
       renderedStations.add(station.id);
       const point = stationPositions.get(station.id);
       const group = svgElement('g', { class: 'station-group', tabindex: '0', role: 'img', 'aria-label': `${station.name}; Marathi: ${station.mr}` });
-      group.append(svgElement('title')).textContent = `${station.name} · ${station.mr}`;
+      const title = svgElement('title');
+      title.textContent = `${station.name} — ${station.mr}`;
+      group.append(title);
       group.append(svgElement('circle', { cx: point.x, cy: point.y, r: station.interchange ? '6' : '4', class: station.interchange ? 'station station--interchange' : 'station' }));
       const label = svgElement('text', { x: point.x + 8, y: point.y - 8, class: 'station-label' });
       label.textContent = station.name;
