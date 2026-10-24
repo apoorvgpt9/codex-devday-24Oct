@@ -85,6 +85,14 @@ h1 { max-width: 24ch; margin: .15rem 0 0; font-size: clamp(1.5rem, 2.5vw, 2.25re
 h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 
 .data-notice { max-width: 30ch; text-align: right; }
+.workforce-import { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 1rem 2rem; max-width: 1600px; margin: 0 auto; padding: 1rem clamp(1rem, 3vw, 3rem); border-bottom: 1px solid color-mix(in srgb, var(--slate) 28%, transparent); }
+.workforce-import h2 { margin: 0; }
+.workforce-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.workforce-actions label, .workforce-actions button { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid color-mix(in srgb, var(--slate) 55%, transparent); border-radius: .35rem; color: var(--slate); background: transparent; font: inherit; font-size: .8125rem; font-weight: 600; cursor: pointer; }
+.workforce-actions input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; clip-path: inset(50%); }
+.workforce-actions label:hover, .workforce-actions button:hover { background: color-mix(in srgb, var(--paper) 65%, transparent); }
+.workforce-actions label:focus-within, .workforce-actions button:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
+.upload-status { grid-column: 1 / -1; margin: 0; color: var(--switch); font-size: .8125rem; font-weight: 600; }
 
 .app-shell {
   display: grid;
@@ -228,6 +236,7 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
   .map-panel { border-right: 0; }
   .planning-rail { border-top: 1px solid color-mix(in srgb, var(--slate) 28%, transparent); }
   .service-choice { display: grid; }
+  .workforce-import { grid-template-columns: 1fr; align-items: start; }
 }
 
 @media (max-width: 600px) {

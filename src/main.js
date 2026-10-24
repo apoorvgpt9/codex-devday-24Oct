@@ -6,6 +6,7 @@ import { createMap } from './ui/map.js';
 import { setupMemo } from './ui/memo.js';
 import { setupRobustness } from './ui/robustness.js';
 import { renderResults } from './ui/results.js';
+import { setupWorkforceImport } from './ui/workforce-import.js';
 
 const loadJson = (path) => fetch(path).then((response) => {
   if (!response.ok) throw new Error(`Could not load ${path}`);
@@ -13,12 +14,13 @@ const loadJson = (path) => fetch(path).then((response) => {
 });
 
 async function start() {
-  const [employees, places, stations, assumptions] = await Promise.all([
+  const [syntheticEmployees, places, stations, assumptions] = await Promise.all([
     loadJson('data/employees.json'),
     loadJson('data/places.json'),
     loadJson('data/stations.json'),
     loadJson('data/assumptions.json'),
   ]);
+  let employees = syntheticEmployees;
   const fixedContext = {
     office: places.office,
     stations,
@@ -35,6 +37,17 @@ async function start() {
     assumptionDocument: assumptions,
   }));
   renderAssumptions(assumptions);
+
+  function changeWorkforce(nextEmployees) {
+    employees = nextEmployees;
+    map = null;
+    recommendationKey = null;
+    update(currentContext);
+  }
+  setupWorkforceImport({
+    onImported: changeWorkforce,
+    onReset: () => changeWorkforce(syntheticEmployees),
+  });
 
   function update(nextContext) {
     const context = { ...fixedContext, ...nextContext };

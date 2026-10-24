@@ -16,6 +16,18 @@
       <p class="data-notice">Synthetic workforce data. Approximate positions, not to scale.</p>
     </header>
 
+    <section class="workforce-import" aria-labelledby="workforce-title">
+      <div>
+        <h2 id="workforce-title">Use your own workforce</h2>
+        <p class="section-intro">Import a CSV with <strong>lat,lng</strong> and optional <strong>shiftStart</strong> (09:00, 10:00, or 11:00). The file is read only in this browser and is never uploaded.</p>
+      </div>
+      <div class="workforce-actions">
+        <label for="workforce-file">Choose CSV<input id="workforce-file" type="file" accept=".csv,text/csv" /></label>
+        <button id="reset-workforce" type="button" hidden>Reset to synthetic data</button>
+      </div>
+      <p id="upload-status" class="upload-status" aria-live="polite" hidden></p>
+    </section>
+
     <main class="app-shell">
       <section class="map-panel" aria-labelledby="map-title">
         <div class="panel-heading">

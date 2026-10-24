@@ -7,11 +7,12 @@ function svgElement(name, attributes = {}) {
   return element;
 }
 
-function dataBounds(stations, places) {
+function dataBounds(stations, places, employees = []) {
   const points = [
     ...stations.lines.flatMap((line) => line.stations),
     places.office,
     ...places.clusters,
+    ...employees,
   ];
   return {
     minLat: Math.min(...points.map((point) => point.lat)),
@@ -101,7 +102,7 @@ function detailPanel(result) {
 }
 
 export function createMap(container, { stations, places, results, toleranceMin, line3Open = false, boardingStations = [] }) {
-  const bounds = dataBounds(stations, places);
+  const bounds = dataBounds(stations, places, results.map((result) => result.employee));
   const svg = svgElement('svg', { viewBox: `0 0 ${VIEWBOX.width} ${VIEWBOX.height}`, role: 'img', 'aria-label': 'Schematic Pune Metro map and synthetic employee commute verdicts' });
   const definitions = svgElement('defs');
   const marker = svgElement('marker', { id: 'shuttle-arrow', viewBox: '0 0 18 18', refX: '16', refY: '9', markerWidth: '18', markerHeight: '18', markerUnits: 'userSpaceOnUse', orient: 'auto-start-reverse' });

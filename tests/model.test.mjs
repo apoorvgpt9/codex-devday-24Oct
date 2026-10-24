@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { analyseCommute, compareHeadways, evaluateEmployee, recommendHeadway, valuesFromAssumptions } from '../src/model/commute.js';
 import { sensitivity } from '../src/model/sensitivity.js';
+import { parseWorkforceCsv } from '../src/model/workforce.js';
 import { haversineKm } from '../src/model/geo.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -126,4 +127,22 @@ test('a sensitivity run at 1.0 reproduces the baseline recommendation', () => {
 
   assert.equal(report.summary.baselineHolds, report.summary.testsRun);
   assert.ok(report.rows.every((row) => !row.changesRecommendation));
+});
+
+test('workforce CSV parser accepts header order, defaults an omitted shift, and skips blank, invalid, and out-of-bounds rows', () => {
+  const report = parseWorkforceCsv([
+    'shiftStart,lng,lat',
+    '10:00,73.85,18.55',
+    ',73.90,18.60',
+    '',
+    '09:00,not-a-number,18.60',
+    '11:00,74.20,18.60',
+    '08:00,73.85,18.55',
+  ].join('\n'));
+
+  assert.deepEqual(report.employees.map(({ lat, lng, shiftStart }) => ({ lat, lng, shiftStart })), [
+    { lat: 18.55, lng: 73.85, shiftStart: '10:00' },
+    { lat: 18.6, lng: 73.9, shiftStart: '09:00' },
+  ]);
+  assert.equal(report.skipped, 4);
 });
