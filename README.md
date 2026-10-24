@@ -12,6 +12,8 @@ Commit history shows the timeline.
 a company shuttle from Ramwadi every **20 minutes** is the optimum — 253 people off cabs, 3 buses, ₹22.8 lakh/month net,
 317 t CO₂/year. More frequent shuttles add riders but cost more than they save. When Line 3 opens end to end: 461 people.
 
+**Live:** https://apoorvgpt9.github.io/codex-devday-24Oct/
+
 **Run it:** `python3 -m http.server 8000` → open http://localhost:8000. Works offline.
 **Test it:** `node --test tests/`
 
