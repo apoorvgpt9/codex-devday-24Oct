@@ -10,6 +10,7 @@ colors:
   purple: "#6B4FA0"
   pink: "#D6418A"
   amber: "#F2B200"
+  amber-ink: "#1E2B33"
   switch: "#1F8A5B"
   stay: "#B5473A"
 typography:

@@ -39,6 +39,7 @@
   --purple: #6b4fa0;
   --pink: #d6418a;
   --amber: #f2b200;
+  --amber-ink: #1e2b33;
   --switch: #1f8a5b;
   --stay: #b5473a;
   --paper: #f7f9f9;
@@ -58,7 +59,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-::selection { color: var(--slate); background: var(--amber); }
+::selection { color: var(--amber-ink); background: var(--amber); }
 
 .site-header {
   display: flex;
@@ -172,7 +173,7 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .section-intro { max-width: 65ch; margin: .4rem 0 0; color: var(--mist); font-size: .8125rem; line-height: 1.5; }
 .memo-text { max-width: 72ch; margin: 1.5rem 0; white-space: pre-line; font-size: .9375rem; line-height: 1.65; }
 .memo-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1rem; }
-.memo-actions button { min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid color-mix(in srgb, var(--slate) 65%, transparent); border-radius: .35rem; color: var(--slate); background: var(--amber); font: inherit; font-weight: 600; cursor: pointer; transition: transform 150ms ease-out, background-color 150ms ease-out; }
+.memo-actions button { min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid color-mix(in srgb, var(--slate) 65%, transparent); border-radius: .35rem; color: var(--amber-ink); background: var(--amber); font: inherit; font-weight: 600; cursor: pointer; transition: transform 150ms ease-out, background-color 150ms ease-out; }
 .memo-actions button:hover { background: color-mix(in srgb, var(--amber) 84%, var(--paper)); }
 .memo-actions button:active { transform: scale(.97); }
 .memo-actions button:focus-visible, .assumptions-scroll:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }

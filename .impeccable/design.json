@@ -7,6 +7,7 @@
       "concrete": { "role": "neutral", "displayName": "Concrete Ground", "canonical": "#E6EAEC" },
       "slate": { "role": "neutral", "displayName": "Slate Ink", "canonical": "#1E2B33" },
       "amber": { "role": "primary", "displayName": "Auto-rickshaw Amber", "canonical": "#F2B200" },
+      "amber-ink": { "role": "neutral", "displayName": "Amber Ink", "canonical": "#1E2B33" },
       "aqua": { "role": "secondary", "displayName": "Metro Aqua", "canonical": "#14A3B8" },
       "purple": { "role": "tertiary", "displayName": "Metro Purple", "canonical": "#6B4FA0" },
       "pink": { "role": "tertiary", "displayName": "What-if Pink", "canonical": "#D6418A" },
