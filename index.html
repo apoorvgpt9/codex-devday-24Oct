@@ -36,12 +36,37 @@
       </section>
 
       <aside class="planning-rail" aria-label="Planning controls and results">
-        <h2>Shuttle decision</h2>
-        <p>Controls and financial results arrive in the next milestone.</p>
-        <dl class="rail-preview">
-          <div><dt>Default service</dt><dd>15 min company shuttle</dd></div>
-          <div><dt>Decision tolerance</dt><dd>+10 min versus cab</dd></div>
-        </dl>
+        <form id="controls" class="controls" aria-labelledby="controls-title">
+          <h2 id="controls-title">Shuttle decision</h2>
+          <fieldset class="service-choice">
+            <legend>Last-mile service</legend>
+            <label><input type="radio" name="service" value="shuttle" checked /> Company shuttle</label>
+            <label><input type="radio" name="service" value="pmpml" /> PMPML only</label>
+          </fieldset>
+          <label class="range-control" for="headway">
+            <span>Shuttle every <output id="headway-value" for="headway">15 min</output></span>
+            <input id="headway" type="range" min="10" max="30" step="5" value="15" />
+          </label>
+          <label class="range-control" for="tolerance">
+            <span>Time tolerance <output id="tolerance-value" for="tolerance">+10 min</output></span>
+            <input id="tolerance" type="range" min="0" max="20" step="5" value="10" />
+          </label>
+          <label class="line3-toggle"><input id="line3" type="checkbox" /> Show Line 3 what-if</label>
+        </form>
+
+        <section class="results" aria-labelledby="results-title" aria-live="polite">
+          <h2 id="results-title">At this setting</h2>
+          <p class="switcher-number"><output id="switcher-count">—</output><span>people can switch</span></p>
+          <dl class="result-metrics">
+            <div><dt>Net monthly saving</dt><dd id="net-saving">—</dd></div>
+            <div><dt>Shuttle buses needed</dt><dd id="bus-count">—</dd></div>
+            <div><dt>CO₂ avoided each year</dt><dd id="co2-saved">—</dd></div>
+          </dl>
+          <div class="boarding-breakdown">
+            <h3>Most-used boarding stations</h3>
+            <ol id="boarding-stations"></ol>
+          </div>
+        </section>
       </aside>
     </main>
 
