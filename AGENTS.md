@@ -1,6 +1,8 @@
 # AGENTS.md — rules for Codex in this repo
 
-Read this file, then `PLAN.md`, then `docs/design-brief.md` and `DESIGN.md` / `PRODUCT.md` (Impeccable) before writing code.
+Read this file, then `PLAN.md`, then `PRODUCT.md` and `docs/design-brief.md` before writing code.
+`DESIGN.md` does not exist yet by design — `docs/design-brief.md` is the visual source of truth until M5,
+when `/impeccable document` generates `DESIGN.md` from the built UI. Do not create `DESIGN.md` before M5.
 
 ## What we are building
 **Last Mile** — a planning tool for a company's transport/admin team in Pune. It shows which employees
@@ -18,7 +20,8 @@ how often that shuttle should run, and what it saves (₹ cab spend, CO₂, minu
 4. **Synthetic data is labelled as synthetic** everywhere it appears. Never name a real company as the client.
 5. **Pure logic is separate from UI.** `src/model/*.js` has no DOM access and is unit-testable with
    `node --test tests/`. UI code lives in `src/ui/*.js`.
-6. **Design authority is Impeccable** (`DESIGN.md`, `PRODUCT.md`) plus `docs/design-brief.md`.
+6. **Design authority is Impeccable** (`PRODUCT.md`, later `DESIGN.md`) plus `docs/design-brief.md`.
+   **Code-first, not comp-first:** build directly in HTML/CSS/SVG. No design images, no image generation, no mockup step.
    Do not install or invent a second design system. Do not use any pattern listed under "Do not" in the brief.
 
 ## Working rhythm
