@@ -1,0 +1,26 @@
+{
+  "_note": "Synthetic demo inputs. Office is a fictional 1,200-person company. Cluster centroids are approximate; weights are invented for the demo, not survey data.",
+  "office": { "id": "eon", "name": "EON IT Park, Kharadi", "lat": 18.5530, "lng": 73.9480, "headcount": 1200 },
+  "otherParks": [
+    { "id": "wtc", "name": "World Trade Center, Kharadi", "lat": 18.5560, "lng": 73.9360 },
+    { "id": "itp", "name": "International Tech Park, Kharadi", "lat": 18.5560, "lng": 73.9560 }
+  ],
+  "pmpmlFeeder": {
+    "name": "PMPML Metro Shuttle 20 (Ramwadi → EON / ITP)",
+    "headwayMin": 30,
+    "source": "PunekarNews / MyPunePulse reports, Aug 2024–Aug 2025; current timetable unverified"
+  },
+  "clusters": [
+    { "id": "kothrud", "name": "Kothrud", "lat": 18.5070, "lng": 73.8080, "weight": 0.09 },
+    { "id": "deccan-shivajinagar", "name": "Deccan / Shivajinagar", "lat": 18.5220, "lng": 73.8430, "weight": 0.07 },
+    { "id": "camp-kp", "name": "Camp / Koregaon Park", "lat": 18.5360, "lng": 73.8890, "weight": 0.07 },
+    { "id": "kalyani-nagar", "name": "Kalyani Nagar", "lat": 18.5470, "lng": 73.9020, "weight": 0.06 },
+    { "id": "viman-nagar", "name": "Viman Nagar", "lat": 18.5670, "lng": 73.9140, "weight": 0.12 },
+    { "id": "kharadi", "name": "Kharadi (local)", "lat": 18.5510, "lng": 73.9420, "weight": 0.10 },
+    { "id": "wagholi", "name": "Wagholi", "lat": 18.5800, "lng": 73.9830, "weight": 0.13 },
+    { "id": "hadapsar", "name": "Hadapsar / Magarpatta", "lat": 18.5080, "lng": 73.9260, "weight": 0.12 },
+    { "id": "pcmc", "name": "Pimpri-Chinchwad", "lat": 18.6250, "lng": 73.8050, "weight": 0.08 },
+    { "id": "baner-balewadi", "name": "Baner / Balewadi", "lat": 18.5640, "lng": 73.7800, "weight": 0.08 },
+    { "id": "wakad-hinjewadi", "name": "Wakad / Hinjewadi", "lat": 18.5960, "lng": 73.7550, "weight": 0.08 }
+  ]
+}

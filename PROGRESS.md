@@ -3,3 +3,4 @@
 One line per milestone: `HH:MM · M<n> · verified: … · gaps: …`
 
 - 09:20 · M0 · build pack committed (plan, rules, brief, reference data, fonts, prompts) · gaps: no app code yet (by design — implementation starts at 12:00)
+- 09:19 · M1 · verified: deterministic 1,200-person synthetic data, model tests pass, and summary lands within all four ±15% switcher ranges · gaps: no UI yet (M2)
