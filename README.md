@@ -1,3 +1,5 @@
+<img src="assets/brand/logo-wordmark.png" alt="Last Mile — The shuttle plan that pays for itself." width="480">
+
 # Last Mile
 
 **Should a Kharadi IT company run a shuttle from Ramwadi Metro, how often, and who would actually leave their cab?**

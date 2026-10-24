@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="Last Mile">
+  <style>@font-face{font-family:Overpass;src:url("../fonts/overpass-latin-800-normal.woff2") format("woff2");font-weight:800}@font-face{font-family:Overpass;src:url("../fonts/overpass-latin-400-normal.woff2") format("woff2");font-weight:400}</style>
+  <rect width="1200" height="360" fill="#E6EAEC"/>
+  <g transform="translate(40 40) scale(0.5625)">
+    <rect width="512" height="512" rx="112" fill="#1E2B33"/>
+    <path d="M64 330 H196" stroke="#14A3B8" stroke-width="40" stroke-linecap="round" fill="none"/>
+    <path d="M196 330 C 250 330, 262 196, 352 188" stroke="#F2B200" stroke-width="40" stroke-linecap="round" fill="none"/>
+    <path d="M338 136 L412 186 L342 236 Z" fill="#F2B200"/>
+    <circle cx="196" cy="330" r="42" fill="#E6EAEC" stroke="#1E2B33" stroke-width="16"/>
+  </g>
+  <text x="380" y="190" font-family="Overpass, sans-serif" font-weight="800" font-size="132" letter-spacing="-5" fill="#1E2B33">Last Mile</text>
+  <text x="386" y="262" font-family="Overpass, sans-serif" font-weight="400" font-size="40" fill="#5B6B74">The shuttle plan that pays for itself.</text>
+</svg>
