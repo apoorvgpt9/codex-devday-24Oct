@@ -16,8 +16,6 @@ export function setupRobustness(getInput) {
   const summary = document.querySelector('#robustness-summary');
   const sensitive = document.querySelector('#robustness-sensitive');
   const body = document.querySelector('#robustness-body');
-  let hasRun = false;
-
   function render() {
     const { employees, context, assumptionDocument } = getInput();
     const report = sensitivity(employees, context, assumptionDocument);
@@ -35,14 +33,14 @@ export function setupRobustness(getInput) {
     }));
     result.hidden = false;
     button.textContent = 'Run robustness test again';
-    hasRun = true;
   }
 
   button.addEventListener('click', render);
 
   return {
     invalidate() {
-      if (hasRun) button.textContent = 'Run robustness test again';
+      result.hidden = true;
+      button.textContent = 'Run robustness test';
     },
   };
 }

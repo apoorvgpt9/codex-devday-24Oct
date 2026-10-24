@@ -37,8 +37,11 @@ export function buildMemo({ analysis, context, recommendation, assumptionDocumen
   const line3Note = context.line3Open
     ? 'Line 3 is included as an open what-if, so this is not a current-service commitment.'
     : 'Line 3 remains a future what-if and is excluded from this recommendation.';
+  const selectedPlan = analysis.totals.switchers
+    ? `At the selected ${serviceName(context)}, ${analysis.totals.switchers} people can switch and the result is ${financialOutcome(analysis.totals.netMonthlySaving)}. The three most-used boarding stations are ${topStations}.`
+    : 'No one can switch with this plan.';
 
-  return `Finance,\n\nRecommendation: ${recommendationName(recommendation)}. It needs ${recommended.fleet.buses} buses and can shift ${recommended.totals.switchers} people to Metro + last mile, with ${financialOutcome(recommended.totals.netMonthlySaving)} and ${Math.round(recommended.totals.co2TonnesPerYear)} t CO₂ avoided each year.\n\nAt the selected ${serviceName(context)}, ${analysis.totals.switchers} people can switch and the result is ${financialOutcome(analysis.totals.netMonthlySaving)}. The three most-used boarding stations are ${topStations}. This comparison reimburses Metro, access, and PMPML fares where applicable across ${values.workDaysPerMonth} office days each month. ${line3Note} Validate the lowest-confidence inputs before contracting: ${lowestConfidence}. All figures use ${workforceType} workforce data and the visible local assumptions.`;
+  return `Finance,\n\nRecommendation: ${recommendationName(recommendation)}. It needs ${recommended.fleet.buses} buses and can shift ${recommended.totals.switchers} people to Metro + last mile, with ${financialOutcome(recommended.totals.netMonthlySaving)} and ${Math.round(recommended.totals.co2TonnesPerYear)} t CO₂ avoided each year.\n\n${selectedPlan} This comparison reimburses Metro, access, and PMPML fares where applicable across ${values.workDaysPerMonth} office days each month. ${line3Note} Validate the lowest-confidence inputs before contracting: ${lowestConfidence}. All figures use ${workforceType} workforce data and the visible local assumptions.`;
 }
 
 async function copyText(text) {

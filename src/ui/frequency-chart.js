@@ -19,7 +19,7 @@ function svgElement(name, attributes = {}) {
 
 export function renderFrequencyChart(comparisons, recommendation, context) {
   const svg = document.querySelector('#frequency-chart');
-  const maximum = Math.max(...comparisons.map((option) => Math.abs(option.analysis.totals.netMonthlySaving)));
+  const maximum = Math.max(1, ...comparisons.map((option) => Math.abs(option.analysis.totals.netMonthlySaving)));
   const chart = { left: 10, top: 20, width: 300, height: 58, gap: 8 };
   const baseline = chart.top + chart.height / 2;
   const barWidth = (chart.width - chart.gap * (comparisons.length - 1)) / comparisons.length;

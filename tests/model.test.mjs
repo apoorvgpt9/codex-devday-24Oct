@@ -166,3 +166,20 @@ test('memo labels uploaded data and negative totals as a net cost', () => {
   assert.match(memo, /uploaded workforce data/);
   assert.doesNotMatch(memo, /synthetic workforce data/);
 });
+
+test('memo explains a selected plan with no switchers', () => {
+  const analysis = analyseCommute(employees, context, assumptionDocument);
+  const noSwitchers = {
+    ...analysis,
+    switchers: [],
+    totals: { ...analysis.totals, switchers: 0, byBoardingStation: [] },
+  };
+  const memo = buildMemo({
+    analysis: noSwitchers,
+    context,
+    recommendation: { service: 'shuttle', headwayMin: 20, analysis: noSwitchers },
+    assumptionDocument,
+  });
+
+  assert.match(memo, /No one can switch with this plan\./);
+});
