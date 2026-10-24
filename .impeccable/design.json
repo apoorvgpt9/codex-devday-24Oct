@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T10:26:00+05:30",
+  "title": "Design System: Last Mile",
+  "extensions": {
+    "colorMeta": {
+      "concrete": { "role": "neutral", "displayName": "Concrete Ground", "canonical": "#E6EAEC" },
+      "slate": { "role": "neutral", "displayName": "Slate Ink", "canonical": "#1E2B33" },
+      "amber": { "role": "primary", "displayName": "Auto-rickshaw Amber", "canonical": "#F2B200" },
+      "aqua": { "role": "secondary", "displayName": "Metro Aqua", "canonical": "#14A3B8" },
+      "purple": { "role": "tertiary", "displayName": "Metro Purple", "canonical": "#6B4FA0" },
+      "pink": { "role": "tertiary", "displayName": "What-if Pink", "canonical": "#D6418A" },
+      "switch": { "role": "semantic", "displayName": "Switch Green", "canonical": "#1F8A5B" },
+      "stay": { "role": "semantic", "displayName": "Cab Brick", "canonical": "#B5473A" }
+    },
+    "motion": [
+      { "name": "map-state", "value": "150ms ease-out", "purpose": "Employee verdict recolour and compact interaction feedback." },
+      { "name": "shuttle-draw", "value": "1.2s cubic-bezier(.2, .8, .2, 1)", "purpose": "One-time operational route draw on page load." }
+    ],
+    "breakpoints": [
+      { "name": "rail-stack", "value": "850px" },
+      { "name": "map-compact", "value": "600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Copy a generated finance memo.",
+      "html": "<button class=\"ds-btn-primary\">Copy memo</button>",
+      "css": ".ds-btn-primary { min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid #1E2B33; border-radius: .35rem; background: #F2B200; color: #1E2B33; font: 600 .8125rem Overpass, sans-serif; cursor: pointer; transition: transform 150ms ease-out, background-color 150ms ease-out; } .ds-btn-primary:hover { background: #F7C83A; } .ds-btn-primary:focus-visible { outline: 3px solid #14A3B8; outline-offset: 3px; } .ds-btn-primary:active { transform: scale(.97); }"
+    },
+    {
+      "name": "Savings Frequency Chart",
+      "kind": "custom",
+      "refersTo": "frequency-chart",
+      "description": "Compact in-rail comparison of shuttle options and the calculated optimum.",
+      "html": "<svg class=\"ds-frequency-chart\" viewBox=\"0 0 120 70\"><rect class=\"ds-bar\" x=\"8\" y=\"25\" width=\"14\" height=\"35\"/><rect class=\"ds-bar ds-bar-recommended\" x=\"30\" y=\"12\" width=\"14\" height=\"48\"/></svg>",
+      "css": ".ds-frequency-chart { width: 100%; } .ds-bar { fill: #1E2B33; opacity: .35; } .ds-bar-recommended { fill: #1F8A5B; opacity: 1; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Transit Operations Board",
+    "keyCharacteristics": ["Transit-diagram geometry", "One amber operational signal", "Inspectable finance-facing outputs"],
+    "rules": [{ "name": "The One Amber Rule", "body": "Amber appears only on the shuttle route and primary action.", "section": "colors" }],
+    "dos": ["Keep the map as the hero.", "Expose every model input with source and confidence."],
+    "donts": ["Do not use generic dashboard cards.", "Do not use colour as the sole status signal."]
+  }
+}
