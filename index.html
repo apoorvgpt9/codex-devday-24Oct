@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#E6EAEC" />
+    <title>Last Mile — Kharadi shuttle planning</title>
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="product-name">Last Mile</p>
+        <h1>Ramwadi to Kharadi, made legible.</h1>
+      </div>
+      <p class="data-notice">Synthetic workforce data · schematic map, not to scale</p>
+    </header>
+
+    <main class="app-shell">
+      <section class="map-panel" aria-labelledby="map-title">
+        <div class="panel-heading">
+          <div>
+            <h2 id="map-title">Metro access and the Kharadi last mile</h2>
+            <p id="map-status" aria-live="polite">Loading the synthetic commute model…</p>
+          </div>
+          <div class="legend" aria-label="Map legend">
+            <span><i class="legend-line line-l1"></i>Line 1</span>
+            <span><i class="legend-line line-l2"></i>Line 2</span>
+            <span><i class="legend-line line-l3"></i>Line 3 what-if</span>
+            <span><i class="legend-dot can-switch"></i>Can switch</span>
+            <span><i class="legend-dot borderline"></i>Within 5 min of tolerance</span>
+            <span><i class="legend-dot stay"></i>Stays on cab</span>
+          </div>
+        </div>
+        <div id="map" class="map-canvas" aria-busy="true"></div>
+      </section>
+
+      <aside class="planning-rail" aria-label="Planning controls and results">
+        <h2>Shuttle decision</h2>
+        <p>Controls and financial results arrive in the next milestone.</p>
+        <dl class="rail-preview">
+          <div><dt>Default service</dt><dd>15 min company shuttle</dd></div>
+          <div><dt>Decision tolerance</dt><dd>+10 min versus cab</dd></div>
+        </dl>
+      </aside>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

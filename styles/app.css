@@ -1,0 +1,159 @@
+@font-face {
+  font-family: Overpass;
+  src: url("../assets/fonts/overpass-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Overpass;
+  src: url("../assets/fonts/overpass-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Overpass;
+  src: url("../assets/fonts/overpass-latin-800-normal.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Mukta;
+  src: url("../assets/fonts/mukta-devanagari-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --concrete: #e6eaec;
+  --slate: #1e2b33;
+  --mist: #65747d;
+  --aqua: #14a3b8;
+  --purple: #6b4fa0;
+  --pink: #d6418a;
+  --amber: #f2b200;
+  --switch: #1f8a5b;
+  --stay: #b5473a;
+  --paper: #f7f9f9;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--concrete); }
+
+body {
+  min-width: 320px;
+  margin: 0;
+  color: var(--slate);
+  background: var(--concrete);
+  font-family: Overpass, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { color: var(--slate); background: var(--amber); }
+
+.site-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 3vw, 3rem) 1.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--slate) 28%, transparent);
+}
+
+.product-name,
+.data-notice,
+.panel-heading p,
+.planning-rail p,
+.rail-preview { margin: 0; color: var(--mist); font-size: .8125rem; line-height: 1.45; }
+
+.product-name { font-weight: 800; color: var(--slate); letter-spacing: -.02em; }
+
+h1, h2, p { text-wrap: pretty; }
+h1 { max-width: 24ch; margin: .15rem 0 0; font-size: clamp(1.5rem, 2.5vw, 2.25rem); letter-spacing: -.035em; line-height: 1.05; }
+h2 { margin: 0; font-size: 1rem; letter-spacing: -.015em; }
+
+.data-notice { max-width: 30ch; text-align: right; }
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(18rem, .85fr);
+  min-height: calc(100vh - 109px);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.map-panel { min-width: 0; padding: clamp(1rem, 2.5vw, 2.5rem); border-right: 1px solid color-mix(in srgb, var(--slate) 28%, transparent); }
+
+.panel-heading { display: flex; align-items: start; justify-content: space-between; gap: 1.5rem; margin-bottom: 1.25rem; }
+.panel-heading p { margin-top: .35rem; }
+
+.legend { display: flex; flex-wrap: wrap; justify-content: end; gap: .35rem .85rem; max-width: 31rem; font-size: .6875rem; line-height: 1.2; color: var(--slate); }
+.legend span { display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap; }
+.legend-line { width: 1.35rem; border-top: 3px solid currentColor; }
+.line-l1 { color: var(--purple); }
+.line-l2 { color: var(--aqua); }
+.line-l3 { color: var(--pink); border-top-style: dashed; }
+.legend-dot { width: .55rem; height: .55rem; border-radius: 50%; background: currentColor; }
+.can-switch { color: var(--switch); }
+.borderline { color: var(--amber); }
+.stay { color: var(--stay); }
+
+.map-canvas { min-height: 560px; background: var(--paper); box-shadow: 0 12px 28px rgb(30 43 51 / 12%); overflow: hidden; }
+.map-canvas svg { display: block; width: 100%; height: auto; min-height: 560px; }
+.metro-line { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
+.metro-line[data-line="L1"] { stroke: var(--purple); }
+.metro-line[data-line="L2"] { stroke: var(--aqua); }
+.metro-line[data-line="L3"] { stroke: var(--pink); stroke-dasharray: 10 9; opacity: .72; }
+.metro-line[data-line="L3"].is-open { stroke-dasharray: none; opacity: 1; }
+.shuttle-loop { fill: none; stroke: var(--amber); stroke-linecap: round; stroke-width: 9; animation: draw-shuttle 1.2s cubic-bezier(.2, .8, .2, 1) both; }
+.station { fill: var(--paper); stroke: var(--slate); stroke-width: 2.25; }
+.station--interchange { fill: var(--slate); stroke: var(--paper); stroke-width: 3.5; }
+.station-label { fill: var(--slate); font-size: 11px; font-weight: 600; paint-order: stroke; stroke: var(--paper); stroke-width: 3.5px; stroke-linejoin: round; }
+.station-group:focus .station, .station-group:hover .station { fill: var(--amber); outline: none; }
+.employee { transition: fill 150ms ease-out, opacity 150ms ease-out; }
+.employee.can-switch { fill: var(--switch); }
+.employee.borderline { fill: var(--amber); }
+.employee.stay { fill: var(--stay); opacity: .64; }
+.map-note { fill: var(--mist); font-size: 11px; }
+
+.planning-rail { padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2.5vw, 2.5rem); background: color-mix(in srgb, var(--paper) 55%, transparent); }
+.planning-rail > p { margin-top: .65rem; max-width: 29ch; }
+.rail-preview { margin-top: 2rem; border-top: 1px solid color-mix(in srgb, var(--slate) 28%, transparent); }
+.rail-preview div { display: flex; justify-content: space-between; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid color-mix(in srgb, var(--slate) 18%, transparent); }
+.rail-preview dt { color: var(--slate); }
+.rail-preview dd { margin: 0; text-align: right; }
+
+@keyframes draw-shuttle { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+@media (max-width: 850px) {
+  .site-header { align-items: start; flex-direction: column; gap: .75rem; }
+  .data-notice { max-width: none; text-align: left; }
+  .app-shell { grid-template-columns: 1fr; }
+  .map-panel { border-right: 0; }
+  .planning-rail { border-top: 1px solid color-mix(in srgb, var(--slate) 28%, transparent); }
+}
+
+@media (max-width: 600px) {
+  .panel-heading { flex-direction: column; gap: .9rem; }
+  .legend { justify-content: start; }
+  .map-canvas, .map-canvas svg { min-height: 430px; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { --concrete: #11181d; --slate: #e3e8eb; --mist: #aebbc2; --paper: #172127; }
+}
