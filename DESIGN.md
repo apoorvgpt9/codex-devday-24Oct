@@ -131,7 +131,7 @@ Transit geometry is mostly square and round: straight 0/45/90-degree routes, cir
 
 - **Shape:** compact `0.35rem` corners with a 44px minimum hit area.
 - **Primary:** amber fill with slate text; label states the action directly.
-- **Active:** scales to 97% with a 150ms transition.
+- **Active:** scales to 96% with a 150ms transition.
 
 ### Assumptions table
 

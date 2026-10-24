@@ -30,7 +30,7 @@
       "refersTo": "button-primary",
       "description": "Copy a generated finance memo.",
       "html": "<button class=\"ds-btn-primary\">Copy memo</button>",
-      "css": ".ds-btn-primary { min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid #1E2B33; border-radius: .35rem; background: #F2B200; color: #1E2B33; font: 600 .8125rem Overpass, sans-serif; cursor: pointer; transition: transform 150ms ease-out, background-color 150ms ease-out; } .ds-btn-primary:hover { background: #F7C83A; } .ds-btn-primary:focus-visible { outline: 3px solid #14A3B8; outline-offset: 3px; } .ds-btn-primary:active { transform: scale(.97); }"
+      "css": ".ds-btn-primary { min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid #1E2B33; border-radius: .35rem; background: #F2B200; color: #1E2B33; font: 600 .8125rem Overpass, sans-serif; cursor: pointer; transition: transform 150ms ease-out, background-color 150ms ease-out; } .ds-btn-primary:hover { background: #F7C83A; } .ds-btn-primary:focus-visible { outline: 3px solid #14A3B8; outline-offset: 3px; } .ds-btn-primary:active { transform: scale(.96); }"
     },
     {
       "name": "Savings Frequency Chart",
