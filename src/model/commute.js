@@ -173,17 +173,20 @@ export function analyseCommute(employees, context, assumptionDocument) {
   };
 }
 
-export function recommendHeadway(employees, context, assumptionDocument) {
+export function compareHeadways(employees, context, assumptionDocument) {
   const assumptions = valuesFromAssumptions(assumptionDocument);
   const options = [
     { service: 'pmpml', headwayMin: assumptions.pmpmlHeadwayMin },
-    ...[10, 15, 20, 30].map((headwayMin) => ({ service: 'shuttle', headwayMin })),
+    ...[30, 25, 20, 15, 10].map((headwayMin) => ({ service: 'shuttle', headwayMin })),
   ];
 
-  return options
-    .map((option) => ({
+  return options.map((option) => ({
       ...option,
       analysis: analyseCommute(employees, { ...context, ...option }, assumptionDocument),
-    }))
+    }));
+}
+
+export function recommendHeadway(employees, context, assumptionDocument) {
+  return compareHeadways(employees, context, assumptionDocument)
     .sort((left, right) => right.analysis.totals.netMonthlySaving - left.analysis.totals.netMonthlySaving)[0];
 }

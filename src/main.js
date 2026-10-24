@@ -1,6 +1,7 @@
-import { analyseCommute, recommendHeadway } from './model/commute.js';
+import { analyseCommute, compareHeadways } from './model/commute.js';
 import { renderAssumptions } from './ui/assumptions.js';
 import { bindControls } from './ui/controls.js';
+import { renderFrequencyChart } from './ui/frequency-chart.js';
 import { createMap } from './ui/map.js';
 import { setupMemo } from './ui/memo.js';
 import { renderResults } from './ui/results.js';
@@ -22,6 +23,7 @@ async function start() {
     stations,
   };
   let map;
+  let comparisons;
   let recommendation;
   let recommendationKey;
   const memo = setupMemo();
@@ -32,7 +34,10 @@ async function start() {
     const analysis = analyseCommute(employees, context, assumptions);
     const nextRecommendationKey = `${context.toleranceMin}:${context.line3Open}`;
     if (recommendationKey !== nextRecommendationKey) {
-      recommendation = recommendHeadway(employees, context, assumptions);
+      comparisons = compareHeadways(employees, context, assumptions);
+      recommendation = comparisons
+        .slice()
+        .sort((left, right) => right.analysis.totals.netMonthlySaving - left.analysis.totals.netMonthlySaving)[0];
       recommendationKey = nextRecommendationKey;
     }
     if (!map) {
@@ -48,6 +53,7 @@ async function start() {
       map.update(analysis.results, context.toleranceMin, context.line3Open, analysis.totals.byBoardingStation);
     }
     renderResults(analysis);
+    renderFrequencyChart(comparisons, recommendation, context);
     memo.render({
       analysis,
       context,
