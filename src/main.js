@@ -1,6 +1,8 @@
-import { analyseCommute } from './model/commute.js';
+import { analyseCommute, recommendHeadway } from './model/commute.js';
+import { renderAssumptions } from './ui/assumptions.js';
 import { bindControls } from './ui/controls.js';
 import { createMap } from './ui/map.js';
+import { setupMemo } from './ui/memo.js';
 import { renderResults } from './ui/results.js';
 
 const loadJson = (path) => fetch(path).then((response) => {
@@ -20,10 +22,19 @@ async function start() {
     stations,
   };
   let map;
+  let recommendation;
+  let recommendationKey;
+  const memo = setupMemo();
+  renderAssumptions(assumptions);
 
   function update(nextContext) {
     const context = { ...fixedContext, ...nextContext };
     const analysis = analyseCommute(employees, context, assumptions);
+    const nextRecommendationKey = `${context.toleranceMin}:${context.line3Open}`;
+    if (recommendationKey !== nextRecommendationKey) {
+      recommendation = recommendHeadway(employees, context, assumptions);
+      recommendationKey = nextRecommendationKey;
+    }
     if (!map) {
       map = createMap(document.querySelector('#map'), {
         stations,
@@ -37,6 +48,12 @@ async function start() {
       map.update(analysis.results, context.toleranceMin, context.line3Open, analysis.totals.byBoardingStation);
     }
     renderResults(analysis);
+    memo.render({
+      analysis,
+      context,
+      recommendation,
+      assumptionDocument: assumptions,
+    });
     document.querySelector('#map-status').textContent = `${analysis.totals.switchers} of ${analysis.totals.workforce} synthetic employees can switch with this plan.`;
   }
 

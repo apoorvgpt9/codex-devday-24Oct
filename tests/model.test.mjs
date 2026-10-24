@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { analyseCommute, evaluateEmployee, valuesFromAssumptions } from '../src/model/commute.js';
+import { analyseCommute, evaluateEmployee, recommendHeadway, valuesFromAssumptions } from '../src/model/commute.js';
 import { haversineKm } from '../src/model/geo.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -86,4 +86,14 @@ test('a 15-minute company shuttle saves more than PMPML-only and a 10-minute shu
   const shuttle10 = analyseCommute(employees, { ...context, headwayMin: 10 }, assumptionDocument);
   assert.ok(shuttle15.totals.netMonthlySaving > pmpml.totals.netMonthlySaving);
   assert.ok(shuttle15.totals.netMonthlySaving > shuttle10.totals.netMonthlySaving);
+});
+
+test('the recommendation selects the headway with the highest net monthly saving', () => {
+  const recommendation = recommendHeadway(employees, context, assumptionDocument);
+  const options = ['pmpml', 'shuttle', 'shuttle', 'shuttle', 'shuttle'].map((service, index) => ({
+    service,
+    headwayMin: [assumptions.pmpmlHeadwayMin, 10, 15, 20, 30][index],
+  }));
+  const bestSaving = Math.max(...options.map((option) => analyseCommute(employees, { ...context, ...option }, assumptionDocument).totals.netMonthlySaving));
+  assert.equal(recommendation.analysis.totals.netMonthlySaving, bestSaving);
 });

@@ -70,6 +70,31 @@
       </aside>
     </main>
 
+    <section class="memo-section" aria-labelledby="memo-title">
+      <div>
+        <h2 id="memo-title">Transport memo</h2>
+        <p class="section-intro">Generated from the selected scenario and the locally stored synthetic planning model.</p>
+      </div>
+      <p id="memo-text" class="memo-text" aria-live="polite"></p>
+      <div class="memo-actions">
+        <button id="copy-memo" type="button">Copy memo</button>
+        <p id="copy-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="assumptions-section" aria-labelledby="assumptions-title">
+      <div>
+        <h2 id="assumptions-title">Model assumptions</h2>
+        <p class="section-intro">Every rate, speed, fare, and cost shown in this tool is traceable to this local table.</p>
+      </div>
+      <div class="assumptions-scroll" tabindex="0">
+        <table>
+          <thead><tr><th scope="col">Input</th><th scope="col">Value</th><th scope="col">Source</th><th scope="col">Confidence</th></tr></thead>
+          <tbody id="assumptions-body"></tbody>
+        </table>
+      </div>
+    </section>
+
     <script type="module" src="src/main.js"></script>
   </body>
 </html>
