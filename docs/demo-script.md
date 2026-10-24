@@ -23,9 +23,15 @@ The tool finds that peak itself: it recommends 20 minutes." Point at the savings
 **1:45 — The output (15 s).** Show memo. "It writes the memo to finance, with every assumption listed and its confidence.
 Built with Codex and designed offline-first for exactly this train — no map tiles, no API calls, nothing that breaks on a weak signal."
 
-**Optional (if M7a ships) — Robustness (15 s).** Click "Run robustness test". "Every guess here is labelled. Shift each
+**Robustness (15 s).** Click "Run robustness test". "Every guess here is labelled. Shift each
 low-confidence one by 25% either way: 20 minutes stays best in 14 of 18. The one input that really matters is peak cab
 speed — so that's what finance should measure first."
+
+**Optional — your own data (15 s).** Click "Use your own CSV ↓", upload `data/sample-upload.csv`. "Swap in an HR export —
+it never leaves the browser. For this 150-person team the answer flips: don't buy buses, use the PMPML feeder — 16 people,
+₹1.9 lakh a month. Same tool, honest answer." Then Reset.
+
+**Optional — why this dot? (10 s).** Click a green PCMC dot: "Cab 87 minutes, Metro plus shuttle 90 — within tolerance."
 
 ## If a judge asks
 - *"Is the data real?"* — Stations and the feeder route are real (approximate positions). Employees and costs are synthetic
