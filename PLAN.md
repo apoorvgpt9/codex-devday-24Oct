@@ -135,6 +135,9 @@ Build in this order. Each is its own commit and must not change any existing num
   low-confidence input)." Then a compact table: input · −25% → plan · +25% → plan, with rows that flip the plan marked in
   `--stay` and words ("changes the plan"), not colour alone. Re-running after a control change uses the new context.
 - Tests: baseline recommendation unchanged; every low-confidence numeric assumption appears; a ×1.0 run reproduces baseline.
+- **Expected result (orchestrator pre-check):** baseline 20 min holds in **14 of 18** tests. Flips: peak-hour cab speed
+  −25% → 15 min, +25% → PMPML only; shuttle speed ±25% → 15 min. Headline should also name the most sensitive input:
+  "Most sensitive to peak-hour cab speed — measure it before contracting buses." If the count differs, find out why before shipping.
 
 ### M7b — "Why this verdict?" (click a dot)
 - Clicking/tapping the map finds the nearest employee dot within 12px (SVG coordinates) and opens a small panel beside the
