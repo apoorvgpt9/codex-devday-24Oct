@@ -1,0 +1,69 @@
+{
+  "_note": "Approximate coordinates (±300 m) for a schematic map. Not survey data. Line 3 is a what-if layer; its operational status is unconfirmed as of 24 Oct 2026.",
+  "lines": [
+    {
+      "id": "L2",
+      "name": "Line 2 (Aqua) Vanaz–Ramwadi",
+      "color": "aqua",
+      "status": "operational",
+      "stations": [
+        { "id": "vanaz", "name": "Vanaz", "mr": "वनाझ", "lat": 18.5075, "lng": 73.8050 },
+        { "id": "anand-nagar", "name": "Anand Nagar", "mr": "आनंद नगर", "lat": 18.5090, "lng": 73.8130 },
+        { "id": "ideal-colony", "name": "Ideal Colony", "mr": "आयडियल कॉलनी", "lat": 18.5105, "lng": 73.8205 },
+        { "id": "nal-stop", "name": "Nal Stop", "mr": "नळ स्टॉप", "lat": 18.5110, "lng": 73.8290 },
+        { "id": "garware", "name": "Garware College", "mr": "गरवारे कॉलेज", "lat": 18.5135, "lng": 73.8370 },
+        { "id": "deccan", "name": "Deccan Gymkhana", "mr": "डेक्कन जिमखाना", "lat": 18.5160, "lng": 73.8420 },
+        { "id": "sambhaji-udyan", "name": "Chhatrapati Sambhaji Udyan", "mr": "छत्रपती संभाजी उद्यान", "lat": 18.5200, "lng": 73.8460 },
+        { "id": "pmc", "name": "PMC", "mr": "पुणे महानगरपालिका", "lat": 18.5235, "lng": 73.8530 },
+        { "id": "district-court", "name": "District Court", "mr": "जिल्हा न्यायालय", "lat": 18.5285, "lng": 73.8560, "interchange": ["L1", "L3"] },
+        { "id": "mangalwar-peth", "name": "Mangalwar Peth", "mr": "मंगळवार पेठ", "lat": 18.5270, "lng": 73.8650 },
+        { "id": "pune-station", "name": "Pune Railway Station", "mr": "पुणे रेल्वे स्टेशन", "lat": 18.5290, "lng": 73.8740 },
+        { "id": "ruby-hall", "name": "Ruby Hall Clinic", "mr": "रुबी हॉल क्लिनिक", "lat": 18.5330, "lng": 73.8790 },
+        { "id": "bund-garden", "name": "Bund Garden", "mr": "बंड गार्डन", "lat": 18.5385, "lng": 73.8840 },
+        { "id": "yerawada", "name": "Yerawada", "mr": "येरवडा", "lat": 18.5480, "lng": 73.8880 },
+        { "id": "kalyani-nagar", "name": "Kalyani Nagar", "mr": "कल्याणी नगर", "lat": 18.5480, "lng": 73.9000 },
+        { "id": "ramwadi", "name": "Ramwadi", "mr": "रामवाडी", "lat": 18.5530, "lng": 73.9110, "role": "shuttle-hub" }
+      ]
+    },
+    {
+      "id": "L1",
+      "name": "Line 1 (Purple) PCMC–Swargate",
+      "color": "purple",
+      "status": "operational",
+      "stations": [
+        { "id": "pcmc", "name": "PCMC", "mr": "पीसीएमसी", "lat": 18.6290, "lng": 73.8000 },
+        { "id": "sant-tukaram-nagar", "name": "Sant Tukaram Nagar", "mr": "संत तुकाराम नगर", "lat": 18.6200, "lng": 73.8080 },
+        { "id": "bhosari", "name": "Bhosari (Nashik Phata)", "mr": "भोसरी", "lat": 18.6110, "lng": 73.8170 },
+        { "id": "kasarwadi", "name": "Kasarwadi", "mr": "कासारवाडी", "lat": 18.6030, "lng": 73.8220 },
+        { "id": "phugewadi", "name": "Phugewadi", "mr": "फुगेवाडी", "lat": 18.5940, "lng": 73.8290 },
+        { "id": "dapodi", "name": "Dapodi", "mr": "दापोडी", "lat": 18.5830, "lng": 73.8330 },
+        { "id": "bopodi", "name": "Bopodi", "mr": "बोपोडी", "lat": 18.5720, "lng": 73.8380 },
+        { "id": "khadki", "name": "Khadki", "mr": "खडकी", "lat": 18.5640, "lng": 73.8450 },
+        { "id": "range-hill", "name": "Range Hill", "mr": "रेंज हिल", "lat": 18.5480, "lng": 73.8420 },
+        { "id": "shivajinagar", "name": "Shivajinagar", "mr": "शिवाजीनगर", "lat": 18.5310, "lng": 73.8500 },
+        { "id": "district-court", "name": "District Court", "mr": "जिल्हा न्यायालय", "lat": 18.5285, "lng": 73.8560, "interchange": ["L2", "L3"] },
+        { "id": "budhwar-peth", "name": "Budhwar Peth", "mr": "बुधवार पेठ", "lat": 18.5170, "lng": 73.8570 },
+        { "id": "mandai", "name": "Mandai", "mr": "मंडई", "lat": 18.5120, "lng": 73.8580 },
+        { "id": "swargate", "name": "Swargate", "mr": "स्वारगेट", "lat": 18.5010, "lng": 73.8630 }
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Line 3 (Pink) Hinjewadi–District Court — what-if",
+      "color": "pink",
+      "status": "what-if",
+      "stations": [
+        { "id": "maan", "name": "Megapolis (Maan)", "mr": "मेगापोलिस (माण)", "lat": 18.5810, "lng": 73.6890 },
+        { "id": "hinjewadi-ph3", "name": "Hinjewadi Phase 3", "mr": "हिंजवडी फेज ३", "lat": 18.5870, "lng": 73.7050 },
+        { "id": "hinjewadi-ph2", "name": "Hinjewadi Phase 2", "mr": "हिंजवडी फेज २", "lat": 18.5920, "lng": 73.7180 },
+        { "id": "hinjewadi-ph1", "name": "Hinjewadi Phase 1", "mr": "हिंजवडी फेज १", "lat": 18.5910, "lng": 73.7380 },
+        { "id": "wakad-chowk", "name": "Wakad Chowk", "mr": "वाकड चौक", "lat": 18.5980, "lng": 73.7620 },
+        { "id": "balewadi-stadium", "name": "Balewadi Stadium", "mr": "बालेवाडी स्टेडियम", "lat": 18.5760, "lng": 73.7680 },
+        { "id": "baner", "name": "Baner", "mr": "बाणेर", "lat": 18.5640, "lng": 73.7860 },
+        { "id": "university", "name": "University", "mr": "विद्यापीठ", "lat": 18.5520, "lng": 73.8260 },
+        { "id": "shivajinagar-l3", "name": "Shivajinagar", "mr": "शिवाजीनगर", "lat": 18.5310, "lng": 73.8500 },
+        { "id": "district-court", "name": "District Court", "mr": "जिल्हा न्यायालय", "lat": 18.5285, "lng": 73.8560, "interchange": ["L1", "L2"] }
+      ]
+    }
+  ]
+}
