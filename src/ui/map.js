@@ -62,19 +62,24 @@ function rounded(value) {
   return `${Math.round(value)} min`;
 }
 
-function detailPanel(result) {
+function employeeDisplayName(employee, places) {
+  if (employee.id.startsWith('uploaded-')) return 'Uploaded employee';
+  return places.clusters.find((cluster) => cluster.id === employee.cluster)?.name ?? employee.cluster;
+}
+
+function detailPanel(result, places) {
   const panel = document.createElement('aside');
   panel.className = 'map-detail';
-  panel.setAttribute('aria-label', `Commute details for ${result.employee.cluster}`);
+  panel.setAttribute('aria-label', `Commute details for ${employeeDisplayName(result.employee, places)}`);
   const close = document.createElement('button');
   close.type = 'button';
   close.className = 'map-detail-close';
   close.setAttribute('aria-label', 'Close commute details');
   close.textContent = 'Close';
   const title = document.createElement('h3');
-  title.textContent = result.employee.cluster;
+  title.textContent = employeeDisplayName(result.employee, places);
   const cab = document.createElement('p');
-  cab.innerHTML = `<strong>Cab</strong><span>${rounded(result.cab.minutes)} · ₹${Math.round(result.cab.costPerDay)}/day</span>`;
+  cab.innerHTML = `<strong>Cab</strong><span>${rounded(result.cab.minutes)}, ₹${Math.round(result.cab.costPerDay)} a day</span>`;
   const verdict = document.createElement('p');
   verdict.className = `map-detail-verdict ${result.canSwitch ? 'can-switch' : 'stay'}`;
   verdict.textContent = `${result.canSwitch ? 'Can switch' : 'Stay on cab'} — ${result.reason}`;
@@ -101,9 +106,9 @@ function detailPanel(result) {
   return { panel, close };
 }
 
-export function createMap(container, { stations, places, results, toleranceMin, line3Open = false, boardingStations = [] }) {
+export function createMap(container, { stations, places, results, toleranceMin, line3Open = false, boardingStations = [], workforceType = 'synthetic' }) {
   const bounds = dataBounds(stations, places, results.map((result) => result.employee));
-  const svg = svgElement('svg', { viewBox: `0 0 ${VIEWBOX.width} ${VIEWBOX.height}`, role: 'img', 'aria-label': 'Schematic Pune Metro map and synthetic employee commute verdicts' });
+  const svg = svgElement('svg', { viewBox: `0 0 ${VIEWBOX.width} ${VIEWBOX.height}`, role: 'img', 'aria-label': `Schematic Pune Metro map and ${workforceType} employee commute verdicts` });
   const definitions = svgElement('defs');
   const marker = svgElement('marker', { id: 'shuttle-arrow', viewBox: '0 0 18 18', refX: '16', refY: '9', markerWidth: '18', markerHeight: '18', markerUnits: 'userSpaceOnUse', orient: 'auto-start-reverse' });
   marker.append(svgElement('path', { d: 'M 0 1 L 18 9 L 0 17 z', fill: '#F2B200' }));
@@ -192,7 +197,7 @@ export function createMap(container, { stations, places, results, toleranceMin, 
     selectedId = nearest.result.employee.id;
     selectedNode = employeeNodes.get(selectedId);
     selectedNode?.classList.add('is-selected');
-    const { panel, close } = detailPanel(nearest.result);
+    const { panel, close } = detailPanel(nearest.result, places);
     close.addEventListener('click', closeDetail);
     activePanel = panel;
     container.append(panel);

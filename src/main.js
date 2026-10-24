@@ -21,6 +21,7 @@ async function start() {
     loadJson('data/assumptions.json'),
   ]);
   let employees = syntheticEmployees;
+  let workforceType = 'synthetic';
   const fixedContext = {
     office: places.office,
     stations,
@@ -38,15 +39,16 @@ async function start() {
   }));
   renderAssumptions(assumptions);
 
-  function changeWorkforce(nextEmployees) {
+  function changeWorkforce(nextEmployees, nextWorkforceType) {
     employees = nextEmployees;
+    workforceType = nextWorkforceType;
     map = null;
     recommendationKey = null;
     update(currentContext);
   }
   setupWorkforceImport({
-    onImported: changeWorkforce,
-    onReset: () => changeWorkforce(syntheticEmployees),
+    onImported: (uploadedEmployees) => changeWorkforce(uploadedEmployees, 'uploaded'),
+    onReset: () => changeWorkforce(syntheticEmployees, 'synthetic'),
   });
 
   function update(nextContext) {
@@ -69,6 +71,7 @@ async function start() {
         toleranceMin: context.toleranceMin,
         line3Open: context.line3Open,
         boardingStations: analysis.totals.byBoardingStation,
+        workforceType,
       });
     } else {
       map.update(analysis.results, context.toleranceMin, context.line3Open, analysis.totals.byBoardingStation);
@@ -80,9 +83,12 @@ async function start() {
       context,
       recommendation,
       assumptionDocument: assumptions,
+      workforceType,
     });
     robustness.invalidate();
-    document.querySelector('#map-status').textContent = `${analysis.totals.switchers} of ${analysis.totals.workforce} synthetic employees can switch with this plan.`;
+    document.querySelector('#workforce-notice').textContent = `${workforceType === 'uploaded' ? 'Uploaded' : 'Synthetic'} workforce data.`;
+    document.querySelector('#memo-intro').textContent = `Generated from the selected scenario and the locally stored ${workforceType} workforce model.`;
+    document.querySelector('#map-status').textContent = `${analysis.totals.switchers} of ${analysis.totals.workforce} ${workforceType} employees can switch with this plan.`;
   }
 
   const initialContext = bindControls(document.querySelector('#controls'), update);

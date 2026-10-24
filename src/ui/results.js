@@ -1,4 +1,5 @@
 function formatLakh(amount) {
+  if (amount < 0) return `−₹${(Math.abs(amount) / 100000).toFixed(1)} lakh net cost`;
   return `₹${(amount / 100000).toFixed(1)} lakh`;
 }
 

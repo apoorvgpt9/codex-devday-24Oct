@@ -13,20 +13,8 @@
         <p class="product-name">Last Mile</p>
         <h1>Ramwadi to Kharadi, made legible.</h1>
       </div>
-      <p class="data-notice">Synthetic workforce data. Approximate positions, not to scale.</p>
+      <p class="data-notice"><span id="workforce-notice">Synthetic workforce data.</span> Approximate positions, not to scale. <a href="#workforce-title">Use your own CSV ↓</a></p>
     </header>
-
-    <section class="workforce-import" aria-labelledby="workforce-title">
-      <div>
-        <h2 id="workforce-title">Use your own workforce</h2>
-        <p class="section-intro">Import a CSV with <strong>lat,lng</strong> and optional <strong>shiftStart</strong> (09:00, 10:00, or 11:00). The file is read only in this browser and is never uploaded.</p>
-      </div>
-      <div class="workforce-actions">
-        <label for="workforce-file">Choose CSV<input id="workforce-file" type="file" accept=".csv,text/csv" /></label>
-        <button id="reset-workforce" type="button" hidden>Reset to synthetic data</button>
-      </div>
-      <p id="upload-status" class="upload-status" aria-live="polite" hidden></p>
-    </section>
 
     <main class="app-shell">
       <section class="map-panel" aria-labelledby="map-title">
@@ -90,7 +78,7 @@
     <section class="memo-section" aria-labelledby="memo-title">
       <div>
         <h2 id="memo-title">Transport memo</h2>
-        <p class="section-intro">Generated from the selected scenario and the locally stored synthetic planning model.</p>
+        <p id="memo-intro" class="section-intro">Generated from the selected scenario and the locally stored synthetic workforce model.</p>
       </div>
       <p id="memo-text" class="memo-text" aria-live="polite"></p>
       <div class="memo-actions">
@@ -117,6 +105,18 @@
           </table>
         </div>
       </div>
+    </section>
+
+    <section class="workforce-import" aria-labelledby="workforce-title">
+      <div>
+        <h2 id="workforce-title">Use your own workforce</h2>
+        <p class="section-intro">Import a CSV with <strong>lat,lng</strong> and optional <strong>shiftStart</strong> (09:00, 10:00, or 11:00). The file is read only in this browser and is never uploaded.</p>
+      </div>
+      <div class="workforce-actions">
+        <label for="workforce-file">Choose CSV<input id="workforce-file" type="file" accept=".csv,text/csv" /></label>
+        <button id="reset-workforce" type="button" hidden>Reset to synthetic data</button>
+      </div>
+      <p id="upload-status" class="upload-status" aria-live="polite" hidden></p>
     </section>
 
     <section class="assumptions-section" aria-labelledby="assumptions-title">

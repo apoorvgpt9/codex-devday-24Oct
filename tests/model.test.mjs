@@ -6,6 +6,7 @@ import { dirname, resolve } from 'node:path';
 import { analyseCommute, compareHeadways, evaluateEmployee, recommendHeadway, valuesFromAssumptions } from '../src/model/commute.js';
 import { sensitivity } from '../src/model/sensitivity.js';
 import { parseWorkforceCsv } from '../src/model/workforce.js';
+import { buildMemo } from '../src/ui/memo.js';
 import { haversineKm } from '../src/model/geo.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -145,4 +146,23 @@ test('workforce CSV parser accepts header order, defaults an omitted shift, and 
     { lat: 18.6, lng: 73.9, shiftStart: '09:00' },
   ]);
   assert.equal(report.skipped, 4);
+});
+
+test('memo labels uploaded data and negative totals as a net cost', () => {
+  const analysis = analyseCommute(employees, context, assumptionDocument);
+  const loss = {
+    ...analysis,
+    totals: { ...analysis.totals, netMonthlySaving: -450000 },
+  };
+  const memo = buildMemo({
+    analysis: loss,
+    context,
+    recommendation: { service: 'shuttle', headwayMin: 20, analysis: loss },
+    assumptionDocument,
+    workforceType: 'uploaded',
+  });
+
+  assert.match(memo, /−₹4\.5 lakh net cost/);
+  assert.match(memo, /uploaded workforce data/);
+  assert.doesNotMatch(memo, /synthetic workforce data/);
 });
