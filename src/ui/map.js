@@ -123,13 +123,13 @@ export function createMap(container, { stations, places, results, toleranceMin, 
   const terminalIds = new Set(stations.lines.flatMap((line) => [line.stations[0].id, line.stations.at(-1).id]));
   const stationLabels = [];
   const stationLabelBoxes = [labelBox({ x: office.x + 10, y: office.y - 10, text: 'EON IT Park' })];
-  const renderedCoordinates = new Set();
+  const renderedStations = new Set();
   const boardingStationIds = new Set(boardingStations.map((station) => station.stationId));
   for (const line of stations.lines) {
     for (const station of line.stations) {
-      const key = coordinateKey(station);
-      if (renderedCoordinates.has(key)) continue;
-      renderedCoordinates.add(key);
+      const key = `${station.name}:${coordinateKey(station)}`;
+      if (renderedStations.has(key)) continue;
+      renderedStations.add(key);
       const point = stationPositions.get(station.id);
       const group = svgElement('g', { class: 'station-group', tabindex: '0', role: 'img', 'aria-label': `${station.name}; Marathi: ${station.mr}` });
       const title = svgElement('title');

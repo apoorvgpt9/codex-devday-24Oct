@@ -57,6 +57,11 @@
         <section class="results" aria-labelledby="results-title" aria-live="polite">
           <h2 id="results-title">At this setting</h2>
           <p class="switcher-number"><output id="switcher-count">—</output><span>people can switch</span></p>
+          <section class="frequency-chart-section" aria-labelledby="frequency-chart-title">
+            <h3 id="frequency-chart-title">Net monthly saving by shuttle frequency</h3>
+            <p>Highest bar is the recommended plan. Outline marks this setting.</p>
+            <svg id="frequency-chart" viewBox="0 0 320 118" role="img" aria-label="Net monthly saving by shuttle frequency"></svg>
+          </section>
           <dl class="result-metrics">
             <div><dt>Net monthly saving</dt><dd id="net-saving">—</dd></div>
             <div><dt>Shuttle buses needed</dt><dd id="bus-count">—</dd></div>
@@ -66,11 +71,6 @@
             <h3>Most-used boarding stations</h3>
             <ol id="boarding-stations"></ol>
           </div>
-          <section class="frequency-chart-section" aria-labelledby="frequency-chart-title">
-            <h3 id="frequency-chart-title">Net monthly saving by shuttle frequency</h3>
-            <p>Highest bar is the recommended plan. Outline marks this setting.</p>
-            <svg id="frequency-chart" viewBox="0 0 320 160" role="img" aria-label="Net monthly saving by shuttle frequency"></svg>
-          </section>
         </section>
       </aside>
     </main>
