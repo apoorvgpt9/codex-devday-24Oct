@@ -107,7 +107,7 @@ At 850px and below, the rail stacks below the map. At 600px and below, map headi
 
 ## Elevation & Depth
 
-The system is chiefly flat and uses 1px hairlines to organize analytical material. The map field may use the existing diffuse, downward shadow (`0 12px 28px rgb(30 43 51 / 12%)`) as a single ambient elevation layer; surrounding panels do not repeat it.
+The system is flat and uses 1px hairlines to organize analytical material. The map field is a bounded paper surface rather than an elevated card; surrounding panels likewise avoid repeated shadows.
 
 ## Shapes
 

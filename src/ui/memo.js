@@ -70,7 +70,14 @@ export function setupMemo() {
   return {
     render(data) {
       currentText = buildMemo(data);
-      memo.textContent = currentText;
+      const [salutation, recommendation, ...detail] = currentText.split('\n\n');
+      const emphasis = document.createElement('strong');
+      emphasis.textContent = recommendation;
+      memo.replaceChildren(
+        document.createTextNode(`${salutation}\n\n`),
+        emphasis,
+        document.createTextNode(`\n\n${detail.join('\n\n')}`),
+      );
       copyStatus.textContent = '';
     },
   };

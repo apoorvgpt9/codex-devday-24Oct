@@ -1,5 +1,5 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
-const VIEWBOX = { width: 1000, height: 650, inset: 68 };
+const VIEWBOX = { width: 1000, height: 650, inset: 52 };
 
 function svgElement(name, attributes = {}) {
   const element = document.createElementNS(SVG_NS, name);

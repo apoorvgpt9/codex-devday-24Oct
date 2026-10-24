@@ -110,7 +110,7 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .legend-dot.borderline { color: var(--switch); background: transparent; border: 1.25px solid currentColor; }
 .stay { color: var(--stay); }
 
-.map-canvas { min-height: 560px; background: var(--paper); box-shadow: 0 12px 28px rgb(30 43 51 / 12%); overflow: hidden; }
+.map-canvas { min-height: 560px; background: var(--paper); border: 1px solid color-mix(in srgb, var(--slate) 18%, transparent); overflow: hidden; }
 .map-canvas svg { display: block; width: 100%; height: auto; min-height: 560px; }
 .metro-line { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
 .metro-line[data-line="L1"] { stroke: var(--purple); }
@@ -172,6 +172,7 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .memo-section, .assumptions-section { max-width: 1600px; margin: 0 auto; padding: clamp(1.5rem, 3vw, 3rem); border-top: 1px solid color-mix(in srgb, var(--slate) 28%, transparent); }
 .section-intro { max-width: 65ch; margin: .4rem 0 0; color: var(--mist); font-size: .8125rem; line-height: 1.5; }
 .memo-text { max-width: 72ch; margin: 1.5rem 0; white-space: pre-line; font-size: .9375rem; line-height: 1.65; }
+.memo-text strong { font-weight: 800; }
 .memo-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1rem; }
 .memo-actions button { min-height: 2.75rem; padding: .65rem 1rem; border: 1px solid color-mix(in srgb, var(--slate) 65%, transparent); border-radius: .35rem; color: var(--amber-ink); background: var(--amber); font: inherit; font-weight: 600; cursor: pointer; transition: transform 150ms ease-out, background-color 150ms ease-out; }
 .memo-actions button:hover { background: color-mix(in srgb, var(--amber) 84%, var(--paper)); }
