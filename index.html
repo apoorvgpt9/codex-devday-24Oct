@@ -87,6 +87,26 @@
       </div>
     </section>
 
+    <section class="robustness-section" aria-labelledby="robustness-title">
+      <div>
+        <h2 id="robustness-title">How robust is this?</h2>
+        <p class="section-intro">Stress-test only low-confidence synthetic inputs. This calculation stays on this device.</p>
+      </div>
+      <div class="robustness-actions">
+        <button id="run-robustness" type="button">Run robustness test</button>
+      </div>
+      <div id="robustness-result" hidden>
+        <p id="robustness-summary" class="robustness-summary" aria-live="polite"></p>
+        <p id="robustness-sensitive" class="robustness-sensitive"></p>
+        <div class="robustness-scroll" tabindex="0">
+          <table>
+            <thead><tr><th scope="col">Input</th><th scope="col">−25% → plan</th><th scope="col">+25% → plan</th><th scope="col">Verdict</th></tr></thead>
+            <tbody id="robustness-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="assumptions-section" aria-labelledby="assumptions-title">
       <div>
         <h2 id="assumptions-title">Model assumptions</h2>

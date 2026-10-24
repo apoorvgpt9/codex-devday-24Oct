@@ -4,6 +4,7 @@ import { bindControls } from './ui/controls.js';
 import { renderFrequencyChart } from './ui/frequency-chart.js';
 import { createMap } from './ui/map.js';
 import { setupMemo } from './ui/memo.js';
+import { setupRobustness } from './ui/robustness.js';
 import { renderResults } from './ui/results.js';
 
 const loadJson = (path) => fetch(path).then((response) => {
@@ -26,11 +27,18 @@ async function start() {
   let comparisons;
   let recommendation;
   let recommendationKey;
+  let currentContext;
   const memo = setupMemo();
+  const robustness = setupRobustness(() => ({
+    employees,
+    context: currentContext,
+    assumptionDocument: assumptions,
+  }));
   renderAssumptions(assumptions);
 
   function update(nextContext) {
     const context = { ...fixedContext, ...nextContext };
+    currentContext = context;
     const analysis = analyseCommute(employees, context, assumptions);
     const nextRecommendationKey = `${context.toleranceMin}:${context.line3Open}`;
     if (recommendationKey !== nextRecommendationKey) {
@@ -60,6 +68,7 @@ async function start() {
       recommendation,
       assumptionDocument: assumptions,
     });
+    robustness.invalidate();
     document.querySelector('#map-status').textContent = `${analysis.totals.switchers} of ${analysis.totals.workforce} synthetic employees can switch with this plan.`;
   }
 

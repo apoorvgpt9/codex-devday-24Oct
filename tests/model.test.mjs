@@ -4,6 +4,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { analyseCommute, compareHeadways, evaluateEmployee, recommendHeadway, valuesFromAssumptions } from '../src/model/commute.js';
+import { sensitivity } from '../src/model/sensitivity.js';
 import { haversineKm } from '../src/model/geo.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -104,4 +105,25 @@ test('the frequency comparison includes PMPML and every shuttle frequency shown 
     ['pmpml', assumptions.pmpmlHeadwayMin],
     ['shuttle', 30], ['shuttle', 25], ['shuttle', 20], ['shuttle', 15], ['shuttle', 10],
   ]);
+});
+
+test('sensitivity tests every low-confidence numeric input and preserves the baseline in 14 of 18 runs', () => {
+  const report = sensitivity(employees, { ...context, headwayMin: 20 }, assumptionDocument);
+  const lowNumericInputs = Object.entries(assumptionDocument)
+    .filter(([, input]) => input?.confidence === 'low' && typeof input.value === 'number')
+    .map(([key]) => key);
+
+  assert.equal(report.baseline.headwayMin, 20);
+  assert.deepEqual(report.rows.map((row) => row.key), lowNumericInputs);
+  assert.equal(report.summary.testsRun, 18);
+  assert.equal(report.summary.baselineHolds, 14);
+  assert.equal(report.rows.find((row) => row.key === 'peakRoadSpeedKmh').lowRecommendation.headwayMin, 15);
+  assert.equal(report.rows.find((row) => row.key === 'peakRoadSpeedKmh').highRecommendation.service, 'pmpml');
+});
+
+test('a sensitivity run at 1.0 reproduces the baseline recommendation', () => {
+  const report = sensitivity(employees, { ...context, headwayMin: 20 }, assumptionDocument, { deltaPct: 0 });
+
+  assert.equal(report.summary.baselineHolds, report.summary.testsRun);
+  assert.ok(report.rows.every((row) => !row.changesRecommendation));
 });
