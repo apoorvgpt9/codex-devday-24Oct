@@ -110,7 +110,7 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .legend-dot.borderline { color: var(--switch); background: transparent; border: 1.25px solid currentColor; }
 .stay { color: var(--stay); }
 
-.map-canvas { min-height: 560px; background: var(--paper); border: 1px solid color-mix(in srgb, var(--slate) 18%, transparent); overflow: hidden; }
+.map-canvas { position: relative; min-height: 560px; background: var(--paper); border: 1px solid color-mix(in srgb, var(--slate) 18%, transparent); overflow: hidden; }
 .map-canvas svg { display: block; width: 100%; height: auto; min-height: 560px; }
 .metro-line { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 6; }
 .metro-line[data-line="L1"] { stroke: var(--purple); }
@@ -130,6 +130,20 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .employee.can-switch { fill: var(--switch); }
 .employee.borderline { fill: none; stroke: var(--switch); stroke-width: 1.25; opacity: 1; }
 .employee.stay { fill: var(--stay); opacity: .64; }
+.employee.is-selected { stroke: var(--slate); stroke-width: 2.5; opacity: 1; }
+.map-detail { position: absolute; z-index: 2; top: .75rem; right: .75rem; width: min(20rem, calc(100% - 1.5rem)); padding: 1rem; color: var(--slate); background: var(--paper); border: 1px solid color-mix(in srgb, var(--slate) 55%, transparent); }
+.map-detail h3 { margin: 0 2.8rem .8rem 0; font-size: 1.0625rem; text-transform: capitalize; }
+.map-detail p { display: grid; gap: .15rem; margin: 0 0 .8rem; font-size: .8125rem; line-height: 1.4; }
+.map-detail p strong { font-size: .75rem; }
+.map-detail-close { position: absolute; top: .6rem; right: .6rem; min-height: 2rem; padding: .25rem .5rem; border: 1px solid color-mix(in srgb, var(--slate) 45%, transparent); border-radius: .35rem; color: var(--slate); background: transparent; font: inherit; font-size: .75rem; font-weight: 600; cursor: pointer; }
+.map-detail-close:hover { background: color-mix(in srgb, var(--concrete) 70%, transparent); }
+.map-detail-close:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; }
+.map-detail dl { margin: 0 0 .8rem; border-top: 1px solid color-mix(in srgb, var(--slate) 20%, transparent); font-size: .75rem; font-variant-numeric: tabular-nums; }
+.map-detail dl div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: .42rem 0; border-bottom: 1px solid color-mix(in srgb, var(--slate) 20%, transparent); }
+.map-detail dt { color: var(--mist); }
+.map-detail dd { margin: 0; font-weight: 600; text-align: right; }
+.map-detail .map-detail-verdict { margin: 0; font-weight: 800; }
+.map-detail-unavailable { color: var(--mist); }
 .map-note { fill: var(--mist); font-size: 12px; }
 .cluster-label { fill: var(--mist); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }
 

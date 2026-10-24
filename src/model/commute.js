@@ -47,7 +47,9 @@ export function metroTrip(employee, { stations, line3Open = false, service = 'sh
   if (!route) return { eligible: false, reason: 'no route to Ramwadi', boardingStation: closest.station, accessKm: closest.distanceKm };
 
   const effectiveHeadway = service === 'pmpml' ? assumptions.pmpmlHeadwayMin : headwayMin;
-  const shuttleMinutes = effectiveHeadway / 2 + assumptions.ramwadiToOfficeKm / assumptions.shuttleSpeedKmh * 60;
+  const shuttleWaitMinutes = effectiveHeadway / 2;
+  const shuttleRideMinutes = assumptions.ramwadiToOfficeKm / assumptions.shuttleSpeedKmh * 60;
+  const shuttleMinutes = shuttleWaitMinutes + shuttleRideMinutes;
   const rideMinutes = route.hops * assumptions.minPerStation + route.transfers * assumptions.transferMin;
   const minutes = accessMinutes + rideMinutes + assumptions.metroEntryExitMin + shuttleMinutes;
 
@@ -60,6 +62,9 @@ export function metroTrip(employee, { stations, line3Open = false, service = 'sh
     accessCost,
     route,
     metroFare: fareForStations(route.hops, assumptions.fareSlabs),
+    rideMinutes,
+    shuttleWaitMinutes,
+    shuttleRideMinutes,
     shuttleMinutes,
     minutes,
   };

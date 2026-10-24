@@ -57,6 +57,49 @@ function boxesOverlap(left, right) {
   return left.left < right.right && left.right > right.left && left.top < right.bottom && left.bottom > right.top;
 }
 
+function rounded(value) {
+  return `${Math.round(value)} min`;
+}
+
+function detailPanel(result) {
+  const panel = document.createElement('aside');
+  panel.className = 'map-detail';
+  panel.setAttribute('aria-label', `Commute details for ${result.employee.cluster}`);
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'map-detail-close';
+  close.setAttribute('aria-label', 'Close commute details');
+  close.textContent = 'Close';
+  const title = document.createElement('h3');
+  title.textContent = result.employee.cluster;
+  const cab = document.createElement('p');
+  cab.innerHTML = `<strong>Cab</strong><span>${rounded(result.cab.minutes)} · ₹${Math.round(result.cab.costPerDay)}/day</span>`;
+  const verdict = document.createElement('p');
+  verdict.className = `map-detail-verdict ${result.canSwitch ? 'can-switch' : 'stay'}`;
+  verdict.textContent = `${result.canSwitch ? 'Can switch' : 'Stay on cab'} — ${result.reason}`;
+  panel.append(close, title, cab);
+
+  if (result.metro.eligible) {
+    const metro = document.createElement('dl');
+    metro.innerHTML = [
+      ['Access', `${result.metro.accessMode} · ${rounded(result.metro.accessMinutes)}`],
+      ['Boarding', result.metro.boardingStation.name],
+      ['Metro ride', rounded(result.metro.rideMinutes)],
+      ['Transfers', String(result.metro.route.transfers)],
+      ['Shuttle', `${rounded(result.metro.shuttleWaitMinutes)} wait + ${rounded(result.metro.shuttleRideMinutes)} ride`],
+      ['Total', rounded(result.metro.minutes)],
+    ].map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+    panel.append(metro);
+  } else {
+    const unavailable = document.createElement('p');
+    unavailable.className = 'map-detail-unavailable';
+    unavailable.textContent = `Metro path unavailable: ${result.metro.reason}.`;
+    panel.append(unavailable);
+  }
+  panel.append(verdict);
+  return { panel, close };
+}
+
 export function createMap(container, { stations, places, results, toleranceMin, line3Open = false, boardingStations = [] }) {
   const bounds = dataBounds(stations, places);
   const svg = svgElement('svg', { viewBox: `0 0 ${VIEWBOX.width} ${VIEWBOX.height}`, role: 'img', 'aria-label': 'Schematic Pune Metro map and synthetic employee commute verdicts' });
@@ -119,6 +162,45 @@ export function createMap(container, { stations, places, results, toleranceMin, 
   }
   svg.append(employeeLayer);
 
+  let selectedId = null;
+  let selectedNode = null;
+  let activeResults = results;
+  let activePanel = null;
+  function closeDetail() {
+    if (selectedNode) selectedNode.classList.remove('is-selected');
+    selectedId = null;
+    selectedNode = null;
+    activePanel?.remove();
+    activePanel = null;
+  }
+  function selectNearest(event) {
+    const boundsRect = svg.getBoundingClientRect();
+    const point = {
+      x: (event.clientX - boundsRect.left) / boundsRect.width * VIEWBOX.width,
+      y: (event.clientY - boundsRect.top) / boundsRect.height * VIEWBOX.height,
+    };
+    const nearest = activeResults.map((result) => ({ result, point: project(result.employee, bounds) }))
+      .map((candidate) => ({ ...candidate, distance: Math.hypot(candidate.point.x - point.x, candidate.point.y - point.y) }))
+      .filter((candidate) => candidate.distance <= 12)
+      .sort((left, right) => left.distance - right.distance)[0];
+    if (!nearest) {
+      closeDetail();
+      return;
+    }
+    closeDetail();
+    selectedId = nearest.result.employee.id;
+    selectedNode = employeeNodes.get(selectedId);
+    selectedNode?.classList.add('is-selected');
+    const { panel, close } = detailPanel(nearest.result);
+    close.addEventListener('click', closeDetail);
+    activePanel = panel;
+    container.append(panel);
+  }
+  svg.addEventListener('click', selectNearest);
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDetail();
+  });
+
   const stationLayer = svgElement('g', { class: 'station-layer' });
   const terminalIds = new Set(stations.lines.flatMap((line) => [line.stations[0].id, line.stations.at(-1).id]));
   const stationLabels = [];
@@ -166,6 +248,8 @@ export function createMap(container, { stations, places, results, toleranceMin, 
 
   return {
     update(nextResults, nextToleranceMin, nextLine3Open, nextBoardingStations) {
+      activeResults = nextResults;
+      closeDetail();
       for (const result of nextResults) {
         const node = employeeNodes.get(result.employee.id);
         if (node) node.setAttribute('class', `employee ${employeeClass(result, nextToleranceMin)}`);
