@@ -12,7 +12,15 @@
       "purple": { "role": "tertiary", "displayName": "Metro Purple", "canonical": "#6B4FA0" },
       "pink": { "role": "tertiary", "displayName": "What-if Pink", "canonical": "#D6418A" },
       "switch": { "role": "semantic", "displayName": "Switch Green", "canonical": "#1F8A5B" },
-      "stay": { "role": "semantic", "displayName": "Cab Brick", "canonical": "#B5473A" }
+      "stay": { "role": "semantic", "displayName": "Cab Brick", "canonical": "#B5473A" },
+      "dark-ground": { "role": "neutral", "displayName": "Dark Ground", "canonical": "#11181D" },
+      "dark-paper": { "role": "neutral", "displayName": "Dark Paper", "canonical": "#172127" },
+      "dark-mist": { "role": "neutral", "displayName": "Dark Mist", "canonical": "#AEBBC2" },
+      "dark-switch": { "role": "semantic", "displayName": "Dark Switch Green", "canonical": "#54B982" },
+      "dark-stay": { "role": "semantic", "displayName": "Dark Cab Brick", "canonical": "#F07C71" }
+    },
+    "typographyMeta": {
+      "marathi": { "displayName": "Marathi station labels", "purpose": "Mukta is reserved for Devanagari station names." }
     },
     "motion": [
       { "name": "map-state", "value": "150ms ease-out", "purpose": "Employee verdict recolour and compact interaction feedback." },

@@ -13,6 +13,11 @@ colors:
   amber-ink: "#1E2B33"
   switch: "#1F8A5B"
   stay: "#B5473A"
+  dark-ground: "#11181D"
+  dark-paper: "#172127"
+  dark-mist: "#AEBBC2"
+  dark-switch: "#54B982"
+  dark-stay: "#F07C71"
 typography:
   display:
     fontFamily: "Overpass, system-ui, sans-serif"
@@ -29,6 +34,10 @@ typography:
     fontFamily: "Overpass, system-ui, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 600
+  marathi:
+    fontFamily: "Mukta, sans-serif"
+    fontSize: "inherit"
+    fontWeight: 400
 rounded:
   control: "0.35rem"
 spacing:
