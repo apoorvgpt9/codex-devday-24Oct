@@ -2,8 +2,9 @@
 
 Should your company run a shuttle from Ramwadi Metro to Kharadi — and who would actually switch from cabs?
 
-A planning tool for transport teams in Pune. Built at the DevDay Exchange Community Metro Hackathon, Pune, 24 Oct 2026,
-on a moving Pune Metro train with Codex.
+A planning tool for transport teams in Pune. Built with Codex for the DevDay Exchange Community Metro Hackathon,
+Pune, 24 Oct 2026 — started the morning of the event (with the host's go-ahead) and refined on the moving Metro sprint.
+Commit history shows the timeline.
 
 ![Last Mile at the recommended 20-minute shuttle](docs/screenshot.png)
 

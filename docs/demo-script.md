@@ -21,7 +21,7 @@ The tool finds that peak itself: it recommends 20 minutes." Point at the savings
 **1:35 — What-if (15 s).** Toggle Line 3. "When the Hinjewadi line runs end to end: 461 people and ₹48 lakh a month. Plan the shuttle before it opens."
 
 **1:45 — The output (15 s).** Show memo. "It writes the memo to finance, with every assumption listed and its confidence.
-Built offline-first on a moving Metro with Codex — no map tiles, no API calls, nothing that breaks on a weak signal."
+Built with Codex and designed offline-first for exactly this train — no map tiles, no API calls, nothing that breaks on a weak signal."
 
 ## If a judge asks
 - *"Is the data real?"* — Stations and the feeder route are real (approximate positions). Employees and costs are synthetic
