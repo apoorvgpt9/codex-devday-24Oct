@@ -30,52 +30,45 @@ function project(point, bounds) {
   };
 }
 
-function snapAngle(deltaX, deltaY) {
-  const angle = Math.atan2(deltaY, deltaX);
-  return Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
-}
-
-function schematicLine(stations, bounds) {
-  const positions = new Map();
-  const first = project(stations[0], bounds);
-  positions.set(stations[0].id, first);
-  for (let index = 1; index < stations.length; index += 1) {
-    const rawPrevious = project(stations[index - 1], bounds);
-    const rawCurrent = project(stations[index], bounds);
-    const previous = positions.get(stations[index - 1].id);
-    const distance = Math.hypot(rawCurrent.x - rawPrevious.x, rawCurrent.y - rawPrevious.y);
-    const angle = snapAngle(rawCurrent.x - rawPrevious.x, rawCurrent.y - rawPrevious.y);
-    positions.set(stations[index].id, {
-      x: previous.x + Math.cos(angle) * distance,
-      y: previous.y + Math.sin(angle) * distance,
-    });
-  }
-  return positions;
-}
-
 function employeeClass(result, toleranceMin) {
   if (!result.canSwitch) return 'stay';
   return result.deltaMin >= toleranceMin - 5 ? 'borderline' : 'can-switch';
 }
 
-export function createMap(container, { stations, places, results, toleranceMin, line3Open = false }) {
+function coordinateKey(point) {
+  return `${point.lat.toFixed(4)}:${point.lng.toFixed(4)}`;
+}
+
+function labelVisibility(station, terminalIds, boardingStationIds) {
+  return terminalIds.has(station.id)
+    || station.id === 'district-court'
+    || station.name === 'Shivajinagar'
+    || station.id === 'ramwadi'
+    || boardingStationIds.has(station.id);
+}
+
+export function createMap(container, { stations, places, results, toleranceMin, line3Open = false, boardingStations = [] }) {
   const bounds = dataBounds(stations, places);
   const svg = svgElement('svg', { viewBox: `0 0 ${VIEWBOX.width} ${VIEWBOX.height}`, role: 'img', 'aria-label': 'Schematic Pune Metro map and synthetic employee commute verdicts' });
   const definitions = svgElement('defs');
-  const marker = svgElement('marker', { id: 'shuttle-arrow', viewBox: '0 0 10 10', refX: '8', refY: '5', markerWidth: '7', markerHeight: '7', orient: 'auto-start-reverse' });
-  marker.append(svgElement('path', { d: 'M 0 0 L 10 5 L 0 10 z', fill: '#F2B200' }));
+  const marker = svgElement('marker', { id: 'shuttle-arrow', viewBox: '0 0 16 16', refX: '14', refY: '8', markerWidth: '16', markerHeight: '16', markerUnits: 'userSpaceOnUse', orient: 'auto-start-reverse' });
+  marker.append(svgElement('path', { d: 'M 0 1 L 16 8 L 0 15 z', fill: '#F2B200' }));
   definitions.append(marker);
   svg.append(definitions);
 
   const lineLayer = svgElement('g', { 'aria-hidden': 'true' });
   const stationPositions = new Map();
   for (const line of stations.lines) {
-    const points = schematicLine(line.stations, bounds);
-    for (const [id, position] of points) {
-      if (!stationPositions.has(id)) stationPositions.set(id, position);
+    for (const station of line.stations) {
+      if (!stationPositions.has(station.id)) {
+        stationPositions.set(station.id, project(station, bounds));
+      }
     }
     const path = svgElement('path', {
-      d: line.stations.map((station, index) => `${index ? 'L' : 'M'} ${points.get(station.id).x.toFixed(1)} ${points.get(station.id).y.toFixed(1)}`).join(' '),
+      d: line.stations.map((station, index) => {
+        const point = stationPositions.get(station.id);
+        return `${index ? 'L' : 'M'} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`;
+      }).join(' '),
       class: 'metro-line',
       'data-line': line.id,
     });
@@ -108,11 +101,15 @@ export function createMap(container, { stations, places, results, toleranceMin, 
   svg.append(employeeLayer);
 
   const stationLayer = svgElement('g', { class: 'station-layer' });
-  const renderedStations = new Set();
+  const terminalIds = new Set(stations.lines.flatMap((line) => [line.stations[0].id, line.stations.at(-1).id]));
+  const stationLabels = [];
+  const renderedCoordinates = new Set();
+  const boardingStationIds = new Set(boardingStations.map((station) => station.stationId));
   for (const line of stations.lines) {
     for (const station of line.stations) {
-      if (renderedStations.has(station.id)) continue;
-      renderedStations.add(station.id);
+      const key = coordinateKey(station);
+      if (renderedCoordinates.has(key)) continue;
+      renderedCoordinates.add(key);
       const point = stationPositions.get(station.id);
       const group = svgElement('g', { class: 'station-group', tabindex: '0', role: 'img', 'aria-label': `${station.name}; Marathi: ${station.mr}` });
       const title = svgElement('title');
@@ -121,27 +118,42 @@ export function createMap(container, { stations, places, results, toleranceMin, 
       group.append(svgElement('circle', { cx: point.x, cy: point.y, r: station.interchange ? '6' : '4', class: station.interchange ? 'station station--interchange' : 'station' }));
       const label = svgElement('text', { x: point.x + 8, y: point.y - 8, class: 'station-label' });
       label.textContent = station.name;
+      label.classList.toggle('station-label--hidden', !labelVisibility(station, terminalIds, boardingStationIds));
       group.append(label);
+      stationLabels.push({ station, label });
       stationLayer.append(group);
     }
   }
+  const clusterNames = new Set(['wagholi', 'hadapsar', 'viman-nagar', 'kharadi', 'kothrud', 'pcmc', 'wakad-hinjewadi', 'baner-balewadi']);
+  const clusterLayer = svgElement('g', { class: 'cluster-layer', 'aria-hidden': 'true' });
+  for (const cluster of places.clusters.filter((cluster) => clusterNames.has(cluster.id))) {
+    const point = project(cluster, bounds);
+    const label = svgElement('text', { x: point.x + 7, y: point.y - 8, class: 'cluster-label' });
+    label.textContent = cluster.name;
+    clusterLayer.append(label);
+  }
+  svg.append(clusterLayer);
   svg.append(stationLayer);
   const note = svgElement('text', { x: VIEWBOX.inset, y: VIEWBOX.height - 22, class: 'map-note' });
-  note.textContent = line3Open ? 'Line 3 shown as an open what-if route.' : 'Line 3 is dashed: a future what-if route.';
+  note.textContent = line3Open ? 'Approximate positions. Line 3 is shown as an open what-if route.' : 'Approximate positions. Line 3 is dashed: a future what-if route.';
   svg.append(note);
 
   container.replaceChildren(svg);
   container.setAttribute('aria-busy', 'false');
 
   return {
-    update(nextResults, nextToleranceMin, nextLine3Open) {
+    update(nextResults, nextToleranceMin, nextLine3Open, nextBoardingStations) {
       for (const result of nextResults) {
         const node = employeeNodes.get(result.employee.id);
         if (node) node.setAttribute('class', `employee ${employeeClass(result, nextToleranceMin)}`);
       }
       const line3 = svg.querySelector('[data-line="L3"]');
       line3.classList.toggle('is-open', nextLine3Open);
-      note.textContent = nextLine3Open ? 'Line 3 shown as an open what-if route.' : 'Line 3 is dashed: a future what-if route.';
+      const nextBoardingIds = new Set(nextBoardingStations.map((station) => station.stationId));
+      stationLabels.forEach(({ station, label }) => {
+        label.classList.toggle('station-label--hidden', !labelVisibility(station, terminalIds, nextBoardingIds));
+      });
+      note.textContent = nextLine3Open ? 'Approximate positions. Line 3 is shown as an open what-if route.' : 'Approximate positions. Line 3 is dashed: a future what-if route.';
     },
   };
 }

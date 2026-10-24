@@ -106,7 +106,7 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .line-l3 { color: var(--pink); border-top-style: dashed; }
 .legend-dot { width: .55rem; height: .55rem; border-radius: 50%; background: currentColor; }
 .can-switch { color: var(--switch); }
-.borderline { color: var(--amber); }
+.legend-dot.borderline { color: var(--switch); background: transparent; border: 1.25px solid currentColor; }
 .stay { color: var(--stay); }
 
 .map-canvas { min-height: 560px; background: var(--paper); box-shadow: 0 12px 28px rgb(30 43 51 / 12%); overflow: hidden; }
@@ -119,13 +119,16 @@ h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -.015em; }
 .shuttle-loop { fill: none; stroke: var(--amber); stroke-linecap: round; stroke-width: 9; animation: draw-shuttle 1.2s cubic-bezier(.2, .8, .2, 1) both; }
 .station { fill: var(--paper); stroke: var(--slate); stroke-width: 2.25; }
 .station--interchange { fill: var(--slate); stroke: var(--paper); stroke-width: 3.5; }
-.station-label { fill: var(--slate); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--paper); stroke-width: 3.5px; stroke-linejoin: round; }
-.station-group:focus .station, .station-group:hover .station { fill: var(--amber); outline: none; }
+.station-label { fill: var(--slate); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--paper); stroke-width: 3.5px; stroke-linejoin: round; transition: opacity 150ms ease-out; }
+.station-label--hidden { opacity: 0; }
+.station-group:focus .station-label--hidden, .station-group:hover .station-label--hidden { opacity: 1; }
+.station-group:focus .station, .station-group:hover .station { stroke: var(--aqua); outline: none; }
 .employee { transition: fill 150ms ease-out, opacity 150ms ease-out; }
 .employee.can-switch { fill: var(--switch); }
-.employee.borderline { fill: var(--amber); }
+.employee.borderline { fill: none; stroke: var(--switch); stroke-width: 1.25; opacity: 1; }
 .employee.stay { fill: var(--stay); opacity: .64; }
 .map-note { fill: var(--mist); font-size: 12px; }
+.cluster-label { fill: var(--mist); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; stroke-linejoin: round; }
 
 .planning-rail { padding: clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2.5vw, 2.5rem); background: color-mix(in srgb, var(--paper) 55%, transparent); }
 .controls h2, .results h2 { margin-bottom: 1rem; }

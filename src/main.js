@@ -25,9 +25,16 @@ async function start() {
     const context = { ...fixedContext, ...nextContext };
     const analysis = analyseCommute(employees, context, assumptions);
     if (!map) {
-      map = createMap(document.querySelector('#map'), { stations, places, results: analysis.results, toleranceMin: context.toleranceMin, line3Open: context.line3Open });
+      map = createMap(document.querySelector('#map'), {
+        stations,
+        places,
+        results: analysis.results,
+        toleranceMin: context.toleranceMin,
+        line3Open: context.line3Open,
+        boardingStations: analysis.totals.byBoardingStation,
+      });
     } else {
-      map.update(analysis.results, context.toleranceMin, context.line3Open);
+      map.update(analysis.results, context.toleranceMin, context.line3Open, analysis.totals.byBoardingStation);
     }
     renderResults(analysis);
     document.querySelector('#map-status').textContent = `${analysis.totals.switchers} of ${analysis.totals.workforce} synthetic employees can switch with this plan.`;
