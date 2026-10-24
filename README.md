@@ -35,6 +35,18 @@ For a synthetic 1,200-person company at EON IT Park:
 - The recommendation holds in 14 of 18 robustness tests (each uncertain input moved ±25%). The input that matters most
   is peak-hour cab speed, so that is what to measure before contracting buses.
 
+## Why it is different
+
+- **It plans for the payer, not the passenger.** Commuter apps route one trip; Last Mile answers the employer's question:
+  is a shuttle worth buying, at what frequency, for which employees, and it writes the memo to finance.
+- **It finds the optimum instead of assuming "more is better".** Each extra bus is a fixed cost, so savings peak at
+  20 minutes and fall after; the app searches every option and shows the curve.
+- **It models the public feeder's real limit.** PMPML is capped by spare seats per shift, which is why it tops out at 150.
+- **It tells you how much to trust it.** Every input carries a source and confidence, and a ±25% robustness test names
+  the one measurement that would change the decision.
+- **It is explainable to one person.** Click any employee for the leg-by-leg minutes behind their verdict.
+- **It runs on a moving Metro.** No network, no tiles, no APIs: built and demoed offline-first.
+
 ## What you can do in the app
 
 | Capability | How |
@@ -82,6 +94,15 @@ For each employee the model (`src/model/commute.js`) compares:
 Every rate, speed and cost lives in [`data/assumptions.json`](data/assumptions.json) with its source and confidence, and is
 shown in the app. Nothing is hard-coded in the calculation.
 
+**Engineering choices**
+- Pure, deterministic model (`src/model/`, no DOM, seeded synthetic data) separated from rendering (`src/ui/`).
+- 17 unit tests cover the verdicts, PMPML capacity, fleet sizing, round-trip fares, the savings ranking, the
+  robustness result, CSV parsing and the memo wording.
+- Sensible failure paths: invalid or out-of-area CSV rows are skipped and counted, an unusable file shows a clear message,
+  a dataset where nobody can switch says so, and a missing data file is reported on the page.
+- Recomputing on every control change takes milliseconds; the six-option comparison only reruns when its inputs change.
+- Zero dependencies and zero runtime requests (verified with all non-localhost requests blocked).
+
 ## Data: what is real
 
 - **Real:** Pune Metro Lines 1 and 2 and the Line 3 stations (positions approximate, ±300 m); EON IT Park; the PMPML
@@ -102,16 +123,16 @@ data/                 stations, places, employees, assumptions, sample CSV
 assets/fonts/         Overpass and Mukta (Marathi), vendored — no external requests
 tests/                node:test unit tests
 scripts/              data generators and the summary script
-docs/                 design brief, demo script; docs/process/ holds the build plan, Codex prompts and review log
+docs/                 design brief, demo script, BUILT-WITH-CODEX.md; docs/process/ holds the plan, Codex prompts and reviews
 ```
 
-## How it was built
+## Built with OpenAI Codex
 
-Built with OpenAI Codex, orchestrated milestone by milestone: [`AGENTS.md`](AGENTS.md) holds the rules Codex followed
-(zero dependencies, offline, every number from the assumptions file, model separate from UI). The plan, the exact
-prompts and the per-milestone review log are in [`docs/process/`](docs/process/). Every milestone was rendered and
-clicked through in a headless browser before the next one started. Work began the morning of the event with the host's
-go-ahead and continued on the Metro sprint; the commit history shows the timeline.
+All application code was written by Codex through `/goal` runs against a written plan, under the repo rules in
+[`AGENTS.md`](AGENTS.md), with the Impeccable and make-interfaces-feel-better Codex skills for the design pass.
+Each milestone was reviewed (tests rerun, page rendered in a headless browser) before the next `/goal` started.
+The full loop, prompts, milestone-to-commit map and review log: [`docs/BUILT-WITH-CODEX.md`](docs/BUILT-WITH-CODEX.md).
+Work began the morning of the event with the host's go-ahead and continued on the Metro sprint.
 
 ## Limits
 
