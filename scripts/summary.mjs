@@ -23,5 +23,9 @@ for (const [label, options] of scenarios) {
     stations,
     toleranceMin: 10,
   }, assumptions);
-  console.log(`${label}: ${analysis.totals.switchers} switchers / ${employees.length}`);
+  const lakh = analysis.totals.netMonthlySaving / 100000;
+  console.log(
+    `${label}: ${analysis.totals.switchers} switchers / ${employees.length}; `
+    + `${analysis.fleet.buses} buses; ₹${lakh.toFixed(1)} lakh net saving/month`,
+  );
 }

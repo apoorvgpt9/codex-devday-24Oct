@@ -63,3 +63,27 @@ test('PMPML-only service produces fewer switchers than a 15-minute company shutt
   const shuttle = analyseCommute(employees, context, assumptionDocument);
   assert.ok(pmpml.totals.switchers < shuttle.totals.switchers);
 });
+
+test('PMPML switchers do not exceed the available feeder seats across three shifts', () => {
+  const pmpml = analyseCommute(employees, { ...context, service: 'pmpml', headwayMin: 30 }, assumptionDocument);
+  const capacityPerShift = Math.floor(assumptions.shiftWindowMin / assumptions.pmpmlHeadwayMin)
+    * assumptions.pmpmlSpareSeatsPerBus;
+  assert.ok(pmpml.totals.switchers <= 3 * capacityPerShift);
+});
+
+test('reimbursed fares charge a single switcher for round-trip fares across work days', () => {
+  const vanaz = stations.lines[0].stations[0];
+  const employee = employeeAt('single-vanaz', vanaz.lat, vanaz.lng);
+  const analysis = analyseCommute([employee], context, assumptionDocument);
+  const [result] = analysis.switchers;
+  const expected = 2 * (result.metro.metroFare + result.metro.accessCost) * assumptions.workDaysPerMonth;
+  assert.equal(analysis.totals.reimbursedFares, expected);
+});
+
+test('a 15-minute company shuttle saves more than PMPML-only and a 10-minute shuttle', () => {
+  const pmpml = analyseCommute(employees, { ...context, service: 'pmpml', headwayMin: 30 }, assumptionDocument);
+  const shuttle15 = analyseCommute(employees, context, assumptionDocument);
+  const shuttle10 = analyseCommute(employees, { ...context, headwayMin: 10 }, assumptionDocument);
+  assert.ok(shuttle15.totals.netMonthlySaving > pmpml.totals.netMonthlySaving);
+  assert.ok(shuttle15.totals.netMonthlySaving > shuttle10.totals.netMonthlySaving);
+});

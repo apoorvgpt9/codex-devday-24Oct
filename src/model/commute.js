@@ -1,8 +1,6 @@
 import { haversineKm } from './geo.js';
 import { openStations, routeToRamwadi } from './network.js';
 
-const TURNAROUND_MINUTES = 10;
-
 export function valuesFromAssumptions(assumptions) {
   return Object.fromEntries(
     Object.entries(assumptions)
@@ -91,7 +89,7 @@ export function fleetSize(switchers, { service = 'shuttle', headwayMin }, assump
     return { buses: 0, busesForHeadway: 0, busesForDemand: 0, peakRiders: 0, roundTripMin: 0, seatsPerBusPerShift: 0 };
   }
   const shuttleRideMinutes = assumptions.ramwadiToOfficeKm / assumptions.shuttleSpeedKmh * 60;
-  const roundTripMin = 2 * shuttleRideMinutes + TURNAROUND_MINUTES;
+  const roundTripMin = 2 * shuttleRideMinutes + assumptions.shuttleTurnaroundMin;
   const ridersByShift = new Map();
   for (const result of switchers) {
     ridersByShift.set(result.employee.shiftStart, (ridersByShift.get(result.employee.shiftStart) ?? 0) + 1);
@@ -110,14 +108,38 @@ export function fleetSize(switchers, { service = 'shuttle', headwayMin }, assump
   };
 }
 
+function applyPmpmlCapacity(results, assumptions) {
+  const capacityPerShift = Math.floor(assumptions.shiftWindowMin / assumptions.pmpmlHeadwayMin)
+    * assumptions.pmpmlSpareSeatsPerBus;
+  const acceptedEmployeeIds = new Set();
+
+  for (const shiftStart of new Set(results.map((result) => result.employee.shiftStart))) {
+    results
+      .filter((result) => result.canSwitch && result.employee.shiftStart === shiftStart)
+      .sort((a, b) => a.deltaMin - b.deltaMin)
+      .slice(0, capacityPerShift)
+      .forEach((result) => acceptedEmployeeIds.add(result.employee.id));
+  }
+
+  return results.map((result) => {
+    if (!result.canSwitch || acceptedEmployeeIds.has(result.employee.id)) return result;
+    return { ...result, canSwitch: false, reason: 'PMPML feeder full at peak' };
+  });
+}
+
 export function analyseCommute(employees, context, assumptionDocument) {
   const assumptions = valuesFromAssumptions(assumptionDocument);
-  const results = employees.map((employee) => evaluateEmployee(employee, context, assumptions));
+  const evaluated = employees.map((employee) => evaluateEmployee(employee, context, assumptions));
+  const results = context.service === 'pmpml' ? applyPmpmlCapacity(evaluated, assumptions) : evaluated;
   const switchers = results.filter((result) => result.canSwitch);
   const fleet = fleetSize(switchers, context, assumptions);
   const cabSpendAvoided = switchers.reduce((sum, result) => sum + result.cab.costPerDay * assumptions.workDaysPerMonth, 0);
   const reimbursedFares = assumptions.companyReimbursesFares
-    ? switchers.reduce((sum, result) => sum + (result.metro.metroFare + result.metro.accessCost) * assumptions.workDaysPerMonth, 0)
+    ? switchers.reduce((sum, result) => {
+      const pmpmlFare = context.service === 'pmpml' ? assumptions.pmpmlFare : 0;
+      const roundTripFare = 2 * (result.metro.metroFare + result.metro.accessCost + pmpmlFare);
+      return sum + roundTripFare * assumptions.workDaysPerMonth;
+    }, 0)
     : 0;
   const co2TonnesPerYear = switchers.reduce(
     (sum, result) => sum + result.cab.roadKm * 2 * assumptions.cabCo2KgPerKm * assumptions.workDaysPerMonth * 12 / 1000,
