@@ -98,7 +98,7 @@ the 3 assumptions with lowest confidence, and the Line 3 note when the toggle is
 - **M3 Controls + results (≈20 min):** sliders/toggles recompute dots and results panel live.
 
 ### At the auditorium (3:00–4:30) — `prompts/02-auditorium-goal.md`, then `prompts/03-polish.md`
-- **M4 Memo + assumptions table + Line 3 what-if story** (≈30 min)
+- **M4 Memo + assumptions table + Line 3 what-if story** (≈30 min) — include `recommendHeadway` from docs/review-1.md SHOULD
 - **M5 Design pass:** `/impeccable critique` → `/impeccable polish` → make-interfaces-feel-better review (≈30 min)
 - **M6 Ship (≈20 min):** README with screenshot, GitHub Pages deploy, `docs/demo-script.md` rehearsal. Submit by 4:25.
 
@@ -109,10 +109,11 @@ the 3 assumptions with lowest confidence, and the Line 3 note when the toggle is
 ### Expected ballpark (orchestrator's pre-check with these assumptions; ±15% is fine)
 | Setting | Switchers / 1,200 |
 |---|---|
-| PMPML only (30 min) | ~200 |
+| PMPML only (30 min) | ≤150 (capacity-capped: 2 buses × 25 spare seats × 3 shifts) |
 | Company shuttle 15 min | ~285 |
 | Company shuttle 10 min | ~295 (diminishing returns — say so in the memo) |
 | 15 min + Line 3 open | ~480 |
+Net monthly saving must rank: 15-min shuttle > PMPML-only, and 15-min > 10-min (diminishing returns).
 If results land far outside this, the model has a bug — fix before moving on.
 
 ## 9. Acceptance for the demo
